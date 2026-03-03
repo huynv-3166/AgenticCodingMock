@@ -143,9 +143,11 @@ Quy trình generate code với MoMorph (sử dụng slash commands trong AI agen
 
 1. **`/momorph.constitution`** — Khởi tạo coding standards và conventions cho project
 2. **`/momorph.specify`** — Sinh specification từ Figma frame (spec.md + design-style.md)
-3. **`/momorph.plan`** — Tạo implementation plan chi tiết
-4. **`/momorph.tasks`** — Chia nhỏ plan thành danh sách task thực thi
-5. **`/momorph.implement`** — Thực thi tasks, sinh code theo design
+3. **`/momorph.reviewspecify`** — Review và refine spec output (nên chạy 2–3 lần để kết quả tốt hơn)
+4. **`/momorph.plan`** — Tạo implementation plan chi tiết
+5. **`/momorph.reviewplan`** — Review và refine plan output (nên chạy 2–3 lần để kết quả tốt hơn)
+6. **`/momorph.tasks`** — Chia nhỏ plan thành danh sách task thực thi
+7. **`/momorph.implement`** — Thực thi tasks, sinh code theo design
 
 Ví dụ lệnh:
 
