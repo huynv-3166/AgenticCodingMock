@@ -31,16 +31,16 @@ export function KudosPromo({
 
         {/* Left: Text content */}
         <div className="relative z-10 flex flex-col gap-4 p-8 md:p-12 lg:p-16 flex-1 justify-center">
-          <span className="text-base font-bold text-[var(--color-primary)]">
+          <span className="text-base font-bold text-white">
             {label}
           </span>
-          <h2 className="text-4xl lg:text-[57px] font-bold text-white leading-tight lg:leading-[64px]">
+          <h2 className="text-4xl lg:text-[57px] font-bold text-[var(--color-primary)] leading-tight lg:leading-[64px]">
             {title}
           </h2>
-          <span className="text-sm font-bold text-[var(--color-primary)] uppercase tracking-wider">
+          <span className="text-sm font-bold text-white uppercase tracking-wider">
             {highlight}
           </span>
-          <p className="text-sm font-normal text-white/80 leading-6 max-w-[457px]">
+          <p className="text-sm font-normal text-white leading-6 max-w-[457px]">
             {description}
           </p>
           <Link
