@@ -30,5 +30,14 @@
   "kudos_title": "Sun* Kudos",
   "kudos_highlight": "SAA 2025の新機能",
   "kudos_description": "同僚を認め、感謝する活動 - すべてのSunnerを対象に初めて導入されました。2025年11月に開始予定で、Sun*メンバーが組織委員会が発表したシステム上で同僚への感謝を共有することを奨励します。",
-  "kudos_detail": "詳細"
+  "kudos_detail": "詳細",
+
+  "awards_page_subtitle": "Sun* Annual Awards 2025",
+  "awards_page_title": "SAA 2025 表彰システム",
+  "awards_quantity_label": "賞の数：",
+  "awards_prize_label": "賞金額：",
+  "awards_or_divider": "または",
+  "awards_kudos_promo_label": "表彰活動",
+  "awards_kudos_promo_description": "同僚を認め、感謝する活動 - すべてのSunnerを対象に初めて導入されました。2025年7月に開始予定で、Sun*メンバーが組織委員会が発表したシステム上で同僚への感謝を共有することを奨励します。",
+  "awards_kudos_promo_cta": "詳細"
 }

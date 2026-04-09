@@ -70,6 +70,22 @@
 
   /* Typography - Homepage */
   --font-digital-numbers: var(--font-digital-numbers);
+
+  /* === Awards Page Design Tokens === */
+
+  /* Spacing - Awards */
+  --spacing-sidebar-width: 178px;
+  --spacing-sidebar-content-gap: 120px;
+  --spacing-award-detail-card-gap: 48px;
+  --spacing-award-detail-cards-gap: 80px;
+  --spacing-award-content-gap: 32px;
+
+  /* Border & Radius - Awards */
+  --radius-award-image: 24px;
+  --border-award-image: 0.955px solid #FFEA9E;
+
+  /* Text Shadow - Awards */
+  --text-shadow-active: 0 4px 4px rgba(0, 0, 0, 0.25), 0 0 6px #FAE287;
 }
 
 @theme inline {

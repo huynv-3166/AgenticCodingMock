@@ -30,5 +30,14 @@
   "kudos_title": "Sun* Kudos",
   "kudos_highlight": "NEW IN SAA 2025",
   "kudos_description": "A recognition and appreciation activity for colleagues - introduced for the first time for all Sunners. The activity will be launched in November 2025, encouraging Sun* members to share recognition and appreciation for colleagues on the system announced by the organizing committee.",
-  "kudos_detail": "Details"
+  "kudos_detail": "Details",
+
+  "awards_page_subtitle": "Sun* Annual Awards 2025",
+  "awards_page_title": "SAA 2025 Award System",
+  "awards_quantity_label": "Number of Awards:",
+  "awards_prize_label": "Prize Value:",
+  "awards_or_divider": "Or",
+  "awards_kudos_promo_label": "Recognition Movement",
+  "awards_kudos_promo_description": "A recognition and appreciation activity for colleagues - introduced for the first time for all Sunners. The activity will be launched in July 2025, encouraging Sun* members to share recognition and appreciation for colleagues on the system announced by the organizing committee.",
+  "awards_kudos_promo_cta": "Details"
 }

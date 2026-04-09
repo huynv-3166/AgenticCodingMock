@@ -11,7 +11,7 @@ export function HeroCTA({ aboutAwardsLabel, aboutKudosLabel }: HeroCTAProps) {
     <div className="flex flex-col gap-10 md:flex-row">
       {/* ABOUT AWARDS button */}
       <Link
-        href="/awards-information"
+        href="/awards"
         className="flex w-[276px] max-w-full h-[60px] items-center justify-center gap-2 rounded-lg bg-[#FFEA9E] px-6 py-4 text-[22px] font-bold text-[#00101A] transition-all duration-150 hover:bg-[#F5DC82]"
       >
         {aboutAwardsLabel}

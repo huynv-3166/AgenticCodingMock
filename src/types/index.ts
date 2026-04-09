@@ -25,3 +25,16 @@ export type EventConfig = {
   event_location: string;
   livestream_info: string;
 };
+
+export type AwardDetail = {
+  id: string;
+  title: string;
+  description: string;
+  image: string;
+  quantity: number;
+  unit: string;
+  prizeValue: string;
+  prizeNote: string;
+  prizeValueGroup?: string;
+  prizeNoteGroup?: string;
+};

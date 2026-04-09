@@ -81,3 +81,51 @@
 | 7_Footer | Footer with logo, nav links, community standards link, copyright |
 
 ---
+
+## Hệ thống giải (Award System)
+
+| Property | Value |
+|---|---|
+| Screen ID | `zFYDgyj_pD` |
+| Screen Name | Hệ thống giải (Award System) |
+| Route | `/awards` |
+| Auth Required | Yes (authenticated users only) |
+
+### Purpose
+
+Displays all SAA 2025 award categories with descriptions, number of prizes, and prize values. The page features a sticky left sidebar navigation that allows users to scroll to each award section.
+
+### Entry Points (Navigation TO this screen)
+
+| Source | Source Screen ID | Trigger |
+|---|---|---|
+| Homepage SAA | `i87tDx10uM` | Header nav "Award Information" tab click |
+| Homepage SAA | `i87tDx10uM` | CTA "ABOUT AWARDS" click |
+| Homepage SAA | `i87tDx10uM` | Award card click |
+| Homepage SAA | `i87tDx10uM` | Footer "Awards Information" link click |
+| Direct URL | - | User navigates to `/awards` (must be authenticated) |
+
+### Exit Points (Navigation FROM this screen)
+
+| Destination | Destination Screen ID | Trigger |
+|---|---|---|
+| Sun* Kudos | - | "Chi tiết" button click in the Kudos promotion section at bottom |
+| Homepage SAA | `i87tDx10uM` | SAA logo click in header |
+
+### Key Components
+
+| Component ID | Description |
+|---|---|
+| A_Header | Top navigation with logo, nav links (About SAA 2025, Awards Information, Sun* Kudos), notification bell, language selector, profile icon |
+| B_Hero Banner | Hero banner section for the awards page |
+| C_Sidebar Nav | Sticky left sidebar navigation for scrolling to each award category section |
+| D1_Top Talent | Award info card for Top Talent category with description, number of prizes, and prize values |
+| D2_Top Project | Award info card for Top Project category with description, number of prizes, and prize values |
+| D3_Top Project Leader | Award info card for Top Project Leader category with description, number of prizes, and prize values |
+| D4_Best Manager | Award info card for Best Manager category with description, number of prizes, and prize values |
+| D5_Signature 2025 Creator | Award info card for Signature 2025 Creator category with description, number of prizes, and prize values |
+| D6_MVP | Award info card for MVP category with description, number of prizes, and prize values |
+| E_Sun Kudos | Sun* Kudos promotion section with title, description, and "Chi tiết" button linking to the Kudos page |
+| F_Footer | Footer with logo, nav links, community standards link, copyright |
+
+---

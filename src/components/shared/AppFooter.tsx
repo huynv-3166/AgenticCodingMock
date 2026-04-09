@@ -1,12 +1,5 @@
 import Image from "next/image";
-import Link from "next/link";
-
-const NAV_LINKS = [
-  { label: "About SAA 2025", href: "/" },
-  { label: "Award Information", href: "/awards-information" },
-  { label: "Sun* Kudos", href: "/sun-kudos" },
-  { label: "Tiêu chuẩn chung", href: "/community-standards" },
-];
+import { AppFooterNav } from "./AppFooterNav";
 
 export function AppFooter() {
   return (
@@ -22,18 +15,8 @@ export function AppFooter() {
         />
       </a>
 
-      {/* Center: Nav links */}
-      <nav className="flex flex-wrap justify-center gap-12">
-        {NAV_LINKS.map((link) => (
-          <Link
-            key={link.href}
-            href={link.href}
-            className="text-base font-bold text-white hover:text-[#FFEA9E] hover:bg-[rgba(255,234,158,0.10)] rounded px-4 py-4 transition-colors duration-150"
-          >
-            {link.label}
-          </Link>
-        ))}
-      </nav>
+      {/* Center: Nav links (client component for active state) */}
+      <AppFooterNav />
 
       {/* Right: Copyright */}
       <span className="text-base text-white font-[family-name:var(--font-montserrat-alternates)] whitespace-nowrap">

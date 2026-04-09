@@ -10,7 +10,7 @@ import type { Language } from "@/types";
 
 const NAV_LINKS = [
   { label: "About SAA 2025", href: "/" },
-  { label: "Award Information", href: "/awards-information" },
+  { label: "Award Information", href: "/awards" },
   { label: "Sun* Kudos", href: "/sun-kudos" },
 ] as const;
 

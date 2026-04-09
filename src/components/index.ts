@@ -24,6 +24,15 @@ export { AwardGrid } from "./home/AwardGrid";
 export { KudosPromo } from "./home/KudosPromo";
 export { FloatingActionButton } from "./home/FloatingActionButton";
 
+// Awards components
+export { HeroBanner } from "./awards/HeroBanner";
+export { AwardSectionTitle } from "./awards/AwardSectionTitle";
+export { AwardSidebar } from "./awards/AwardSidebar";
+export { AwardContent } from "./awards/AwardContent";
+export { AwardCard as AwardDetailCard } from "./awards/AwardCard";
+export { AwardCardList as AwardDetailCardList } from "./awards/AwardCardList";
+export { KudosPromoBlock } from "./awards/KudosPromoBlock";
+
 // Icons
 export { GoogleIcon } from "./shared/icons/GoogleIcon";
 export { ChevronDownIcon } from "./shared/icons/ChevronDownIcon";
