@@ -1,26 +1,64 @@
 @import "tailwindcss";
 
+/* === Design Tokens from design-style.md === */
+
 :root {
-	--background: #ffffff;
-	--foreground: #171717;
+  /* Colors */
+  --color-bg-primary: #00101A;
+  --color-header-bg: rgba(11, 15, 18, 0.8);
+  --color-gradient-start: #00101A;
+  --color-text-white: #FFFFFF;
+  --color-button-bg: #FFEA9E;
+  --color-button-text: #00101A;
+  --color-button-hover: #FFE07A;
+  --color-button-active: #FFD54F;
+  --color-divider: #2E3940;
+  --color-error: #FF6B6B;
+
+  /* Typography */
+  --font-montserrat: var(--font-montserrat);
+  --font-montserrat-alternates: var(--font-montserrat-alternates);
+
+  /* Spacing */
+  --spacing-header-px: 144px;
+  --spacing-header-py: 12px;
+  --spacing-hero-px: 144px;
+  --spacing-hero-py: 96px;
+  --spacing-hero-gap: 80px;
+  --spacing-content-gap: 24px;
+  --spacing-content-left: 16px;
+  --spacing-footer-px: 90px;
+  --spacing-footer-py: 40px;
+  --spacing-button-px: 24px;
+  --spacing-button-py: 16px;
+  --spacing-button-icon-gap: 8px;
+
+  /* Border & Radius */
+  --radius-button: 8px;
+  --radius-language: 4px;
+
+  /* Shadows */
+  --shadow-button-hover: 0 4px 12px rgba(255, 234, 158, 0.3);
 }
 
 @theme inline {
-	--color-background: var(--background);
-	--color-foreground: var(--foreground);
-	--font-sans: var(--font-geist-sans);
-	--font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-	:root {
-		--background: #0a0a0a;
-		--foreground: #ededed;
-	}
+  --color-background: var(--color-bg-primary);
+  --color-foreground: var(--color-text-white);
 }
 
 body {
-	background: var(--background);
-	color: var(--foreground);
-	font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-bg-primary);
+  color: var(--color-text-white);
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
