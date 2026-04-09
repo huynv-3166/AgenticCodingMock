@@ -39,6 +39,37 @@
 
   /* Shadows */
   --shadow-button-hover: 0 4px 12px rgba(255, 234, 158, 0.3);
+
+  /* === Homepage Design Tokens === */
+
+  /* Colors - Homepage */
+  --color-primary: #FFEA9E;
+  --color-primary-hover: #F5DC82;
+  --color-primary-active: #E8CF6E;
+  --color-text-kudos: #DBD1C1;
+  --color-kudos-bg: #0F0F0F;
+  --color-border: #998C5F;
+  --color-notification: #D4271D;
+  --color-gold-glow: #FAE287;
+  --color-btn-secondary-bg: rgba(255, 234, 158, 0.10);
+
+  /* Spacing - Homepage */
+  --spacing-section-gap: 120px;
+  --spacing-award-grid-gap: 80px;
+  --spacing-cta-gap: 40px;
+  --spacing-award-card-gap: 24px;
+  --spacing-event-info-gap: 60px;
+
+  /* Shadows - Homepage */
+  --shadow-award: 0 4px 4px 0 rgba(0, 0, 0, 0.25), 0 0 6px 0 #FAE287;
+  --shadow-nav-active: 0 4px 4px rgba(0, 0, 0, 0.25), 0 0 6px #FAE287;
+
+  /* Effects - Homepage */
+  --blur-countdown: 16.64px;
+  --opacity-countdown: 0.5;
+
+  /* Typography - Homepage */
+  --font-digital-numbers: var(--font-digital-numbers);
 }
 
 @theme inline {

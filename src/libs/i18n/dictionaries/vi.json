@@ -3,5 +3,32 @@
   "description_line2": "Đăng nhập để khám phá!",
   "login_button": "LOGIN With Google",
   "footer_copyright": "Bản quyền thuộc về Sun* © 2025",
-  "error_login_failed": "Đăng nhập thất bại. Vui lòng thử lại."
+  "error_login_failed": "Đăng nhập thất bại. Vui lòng thử lại.",
+
+  "nav_about_saa": "About SAA 2025",
+  "nav_award_information": "Award Information",
+  "nav_sun_kudos": "Sun* Kudos",
+  "nav_community_standards": "Tiêu chuẩn chung",
+
+  "coming_soon": "Coming soon",
+  "countdown_days": "DAYS",
+  "countdown_hours": "HOURS",
+  "countdown_minutes": "MINUTES",
+  "event_time_label": "Thời gian:",
+  "event_location_label": "Địa điểm:",
+
+  "cta_about_awards": "ABOUT AWARDS",
+  "cta_about_kudos": "ABOUT KUDOS",
+
+  "awards_caption": "Sun* annual awards 2025",
+  "awards_title": "Hệ thống giải thưởng",
+  "awards_subtitle": "Các hạng mục sẽ được trao giải theo TOP những người xuất sắc nhất.",
+  "awards_detail_link": "Chi tiết",
+  "awards_empty": "Chưa có giải thưởng nào.",
+
+  "kudos_label": "Phong trào ghi nhận",
+  "kudos_title": "Sun* Kudos",
+  "kudos_highlight": "ĐIỂM MỚI CỦA SAA 2025",
+  "kudos_description": "Hoạt động ghi nhận và cảm ơn đồng nghiệp - lần đầu tiên được đưa ra và dành cho tất cả Sunner. Hoạt động sẽ được triển khai vào tháng 11/2025, khuyến khích người Sun* chia sẻ những lời ghi nhận, cảm ơn đồng nghiệp trên hệ thống do BTC công bố. Đây sẽ là chất liệu để Hội đồng Heads tham khảo trong quá trình lựa chọn người đại giải.",
+  "kudos_detail": "Chi tiết"
 }

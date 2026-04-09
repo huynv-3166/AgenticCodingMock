@@ -3,5 +3,32 @@
   "description_line2": "ログインして探検しよう！",
   "login_button": "LOGIN With Google",
   "footer_copyright": "著作権はSun*に帰属します © 2025",
-  "error_login_failed": "ログインに失敗しました。もう一度お試しください。"
+  "error_login_failed": "ログインに失敗しました。もう一度お試しください。",
+
+  "nav_about_saa": "About SAA 2025",
+  "nav_award_information": "Award Information",
+  "nav_sun_kudos": "Sun* Kudos",
+  "nav_community_standards": "コミュニティ基準",
+
+  "coming_soon": "Coming soon",
+  "countdown_days": "DAYS",
+  "countdown_hours": "HOURS",
+  "countdown_minutes": "MINUTES",
+  "event_time_label": "日時：",
+  "event_location_label": "場所：",
+
+  "cta_about_awards": "ABOUT AWARDS",
+  "cta_about_kudos": "ABOUT KUDOS",
+
+  "awards_caption": "Sun* annual awards 2025",
+  "awards_title": "表彰システム",
+  "awards_subtitle": "各部門のTOP優秀者に賞が授与されます。",
+  "awards_detail_link": "詳細",
+  "awards_empty": "賞がまだありません。",
+
+  "kudos_label": "表彰活動",
+  "kudos_title": "Sun* Kudos",
+  "kudos_highlight": "SAA 2025の新機能",
+  "kudos_description": "同僚を認め、感謝する活動 - すべてのSunnerを対象に初めて導入されました。2025年11月に開始予定で、Sun*メンバーが組織委員会が発表したシステム上で同僚への感謝を共有することを奨励します。",
+  "kudos_detail": "詳細"
 }

@@ -9,3 +9,19 @@ export const LANGUAGE_LABELS: Record<Language, string> = {
 };
 
 export const DEFAULT_LANGUAGE: Language = "vi";
+
+export type AwardCategory = {
+  id: string;
+  title: string;
+  description: string;
+  thumbnail_url: string;
+  slug: string;
+  display_order: number;
+};
+
+export type EventConfig = {
+  event_start_date: string;
+  event_date_display: string;
+  event_location: string;
+  livestream_info: string;
+};

@@ -3,5 +3,32 @@
   "description_line2": "Login to explore!",
   "login_button": "LOGIN With Google",
   "footer_copyright": "Copyright belongs to Sun* © 2025",
-  "error_login_failed": "Login failed. Please try again."
+  "error_login_failed": "Login failed. Please try again.",
+
+  "nav_about_saa": "About SAA 2025",
+  "nav_award_information": "Award Information",
+  "nav_sun_kudos": "Sun* Kudos",
+  "nav_community_standards": "Community Standards",
+
+  "coming_soon": "Coming soon",
+  "countdown_days": "DAYS",
+  "countdown_hours": "HOURS",
+  "countdown_minutes": "MINUTES",
+  "event_time_label": "Time:",
+  "event_location_label": "Venue:",
+
+  "cta_about_awards": "ABOUT AWARDS",
+  "cta_about_kudos": "ABOUT KUDOS",
+
+  "awards_caption": "Sun* annual awards 2025",
+  "awards_title": "Award System",
+  "awards_subtitle": "Awards will be given to the TOP outstanding individuals.",
+  "awards_detail_link": "Details",
+  "awards_empty": "No awards available.",
+
+  "kudos_label": "Recognition Movement",
+  "kudos_title": "Sun* Kudos",
+  "kudos_highlight": "NEW IN SAA 2025",
+  "kudos_description": "A recognition and appreciation activity for colleagues - introduced for the first time for all Sunners. The activity will be launched in November 2025, encouraging Sun* members to share recognition and appreciation for colleagues on the system announced by the organizing committee.",
+  "kudos_detail": "Details"
 }
