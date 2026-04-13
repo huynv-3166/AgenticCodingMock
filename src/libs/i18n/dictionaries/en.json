@@ -16,6 +16,9 @@
   "countdown_minutes": "MINUTES",
   "event_time_label": "Time:",
   "event_location_label": "Venue:",
+  "event_date_display": "December 26, 2025",
+  "event_location_value": "Âu Cơ Art Center",
+  "event_livestream_info": "Live broadcast via Livestream",
 
   "cta_about_awards": "ABOUT AWARDS",
   "cta_about_kudos": "ABOUT KUDOS",
@@ -25,6 +28,13 @@
   "awards_subtitle": "Awards will be given to the TOP outstanding individuals.",
   "awards_detail_link": "Details",
   "awards_empty": "No awards available.",
+
+  "award_top_talent_desc": "Honoring the top outstanding individuals in every aspect",
+  "award_top_project_desc": "Honoring outstanding projects in every aspect, projects with remarkable revenue",
+  "award_top_project_leader_desc": "Honoring inspiring managers who lead breakthrough projects",
+  "award_best_manager_desc": "Honoring managers with excellent leadership and team management skills",
+  "award_signature_creator_desc": "Honoring creators who define the signature of Sun* in 2025",
+  "award_mvp_desc": "Honoring the most valuable person with outstanding all-round contributions",
 
   "kudos_label": "Recognition Movement",
   "kudos_title": "Sun* Kudos",
@@ -39,5 +49,32 @@
   "awards_or_divider": "Or",
   "awards_kudos_promo_label": "Recognition Movement",
   "awards_kudos_promo_description": "A recognition and appreciation activity for colleagues - introduced for the first time for all Sunners. The activity will be launched in July 2025, encouraging Sun* members to share recognition and appreciation for colleagues on the system announced by the organizing committee.",
-  "awards_kudos_promo_cta": "Details"
+  "awards_kudos_promo_cta": "Details",
+
+  "countdown_title": "Event will start in",
+
+  "award_detail_top_talent_desc": "The Top Talent award honors outstanding individuals who continuously innovate, dare to take on new challenges, and achieve exceptional results in every aspect. With their positive influence and relentless dedication, they become a source of inspiration for colleagues and play a crucial role in driving Sun* forward. They don't just excel at their work — they spread values, inspire creativity, motivate teammates, and create a positive impact across the entire organization.",
+  "award_detail_top_project_desc": "The Top Project award honors outstanding project teams with remarkable operational results, production efficiency, and flexibility in working with clients. These are projects that have innovated with advanced technical methods, achieved outstanding financial efficiency, and created tremendous value for the organization and clients. The award also recognizes efforts in building standard development processes and optimization during project development, creating exemplary models of excellence and professionalism.",
+  "award_detail_top_project_leader_desc": "The Top Project Leader award honors outstanding project managers — those who are deeply dedicated and maintain the \"Aim High – Be Agile!\" mindset in all activities. They are Project Managers or those who take on project leadership roles at the management level, who have overcome all challenges, demonstrated excellent leadership, technological creativity, Team Master spirit, and made special contributions to team development and creating sustainable value for the organization.",
+  "award_detail_best_manager_desc": "The Best Manager award honors exemplary leaders who have led their teams to exceed expectations, creating motivation and connection, inspiring comprehensive development for their teams. Built on the philosophy of nurturing people and sustainable development, the Best Manager award recognizes excellent managers in people development, elevating team capabilities, and strategic direction. They don't just lead — they inspire, creating a positive work environment where every individual has the opportunity to fully realize their potential.",
+  "award_detail_signature_creator_desc": "The Signature award honors individuals or teams who clearly embody the spirit and identity of each Sun* Awards season, becoming iconic symbols of each era. In 2025, the Signature award honors Creators — individuals or teams who bring innovation and improved methods to work, who lead trends, create creative solutions, and deliver practical value to clients and the organization.",
+  "award_detail_mvp_desc": "The MVP award honors the most outstanding individual of the year — the most exemplary, brightest shining face admired by all of Sun*. Beyond achieving exceptionally outstanding work results, the MVP is also a symbol of dedication, breakthrough spirit, and a powerful source of inspiration for the entire Sun* community.",
+  "award_unit_individual": "Individual",
+  "award_unit_team": "Team",
+  "award_unit_individual_or_team": "Individual or Team",
+  "award_prize_note_each": "per award",
+  "award_prize_note_individual": "for individual award",
+  "award_prize_note_team": "for team award",
+
+  "countdown_error_message": "Unable to load event information. Please try again.",
+  "countdown_retry": "Retry",
+  "countdown_event_started": "Event has started",
+
+  "root_further_p1": "Facing the rapidly changing landscape of the AI era and increasingly high demands from clients, Sun* has chosen a strategy of diversifying capabilities — not only striving to become elite in its field, but also aiming for a higher goal where every Sunner is a \"problem-solver\" — an expert in solving all challenges, finding solutions for every project, client, and societal need.",
+  "root_further_p2": "Inspired by the diversity of capabilities, flexible development potential, and the spirit of digging deeper to break through in the AI era, \"Root Further\" was chosen as the official theme of the Sun* Annual Awards 2025 ceremony.",
+  "root_further_p3": "Going beyond its surface meaning, \"Root Further\" represents our relentless journey to reach further, root deeper, and touch the hidden geological layers to continue surviving, rising, and nurturing the ever-burning passion for value creation of Sun* people. Like roots continuously penetrating deep into the earth, powerfully threading through layers of sediment to absorb the finest essence, Sun* people are also absorbing nourishment from the era and market challenges to reinvent themselves daily, expanding capabilities and firmly rooting into the AI era — a completely new, complex, and unpredictable geological layer, yet one that converges immense potential and opportunity.",
+  "root_further_quote": "A tree with deep roots fears no storm",
+  "root_further_quote_cite": "(English proverb)",
+  "root_further_p4": "Before storms, only trees with strong enough roots can stand firm. An organization with individuals who seek diverse capabilities, are ready to create and embrace challenges, and master change is one that not only stands resilient amid turbulence but also harnesses every advantage and conquers the challenges of the times. More than just the name of a new chapter in the organization's development journey, \"Root Further\" is also a call to action, encouraging each of us to dare to believe in ourselves, dare to dig deep, unlock all potential, dare to break limits, and become the most versatile and excellent version of ourselves. Because in the AI era, diversifying capabilities and leveraging the power of the times is the prerequisite for enduring.",
+  "root_further_p5": "No one knows what hidden geological layers lie deep within the earth of the technology industry and modern market. We only know that when \"Root Further\" has become the core spirit, we will not be afraid, but rather excited before any frontier on our journey forward. Because we always believe that within those infinite realms, wonders and opportunities for growth are waiting for us."
 }

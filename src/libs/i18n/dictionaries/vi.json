@@ -16,6 +16,9 @@
   "countdown_minutes": "MINUTES",
   "event_time_label": "Thời gian:",
   "event_location_label": "Địa điểm:",
+  "event_date_display": "26/12/2025",
+  "event_location_value": "Âu Cơ Art Center",
+  "event_livestream_info": "Tường thuật trực tiếp qua sóng Livestream",
 
   "cta_about_awards": "ABOUT AWARDS",
   "cta_about_kudos": "ABOUT KUDOS",
@@ -25,6 +28,13 @@
   "awards_subtitle": "Các hạng mục sẽ được trao giải theo TOP những người xuất sắc nhất.",
   "awards_detail_link": "Chi tiết",
   "awards_empty": "Chưa có giải thưởng nào.",
+
+  "award_top_talent_desc": "Vinh danh top cá nhân xuất sắc trên mọi phương diện",
+  "award_top_project_desc": "Vinh danh dự án xuất sắc trên mọi phương diện, dự án có doanh thu nổi bật",
+  "award_top_project_leader_desc": "Vinh danh người quản lý truyền cảm hứng và dẫn dắt dự án bứt phá",
+  "award_best_manager_desc": "Vinh danh người quản lý có năng lực quản lý tốt, dẫn dắt đội nhóm",
+  "award_signature_creator_desc": "Vinh danh người quản lý có năng lực quản lý tốt, dẫn dắt đội nhóm",
+  "award_mvp_desc": "Vinh danh người quản lý có năng lực quản lý tốt, dẫn dắt đội nhóm",
 
   "kudos_label": "Phong trào ghi nhận",
   "kudos_title": "Sun* Kudos",
@@ -39,5 +49,32 @@
   "awards_or_divider": "Hoặc",
   "awards_kudos_promo_label": "Phong trào ghi nhận",
   "awards_kudos_promo_description": "Hoạt động ghi nhận và cảm ơn đồng nghiệp - lần đầu tiên được đưa ra và dành cho tất cả Sunner. Hoạt động sẽ được triển khai vào tháng 7/2025, khuyến khích người Sun* chia sẻ những lời ghi nhận, cảm ơn đồng nghiệp trên hệ thống do BTC công bố. Đây sẽ là chất liệu để Hội đồng Heads tham khảo trong quá trình lựa chọn người đạt giải.",
-  "awards_kudos_promo_cta": "Chi tiết"
+  "awards_kudos_promo_cta": "Chi tiết",
+
+  "countdown_title": "Sự kiện sẽ bắt đầu sau",
+
+  "award_detail_top_talent_desc": "Giải thưởng Top Talent vinh danh những cá nhân xuất sắc toàn diện – những người không ngừng đổi mới, sáng tạo, dám chấp nhận thử thách mới, đã đạt được thành tích vượt trội trên mọi phương diện. Với tầm ảnh hưởng tích cực và sự cống hiến không ngừng, họ trở thành nguồn cảm hứng cho đồng nghiệp và đóng vai trò quan trọng trong việc dẫn dắt Sun* tiến xa hơn. Họ không chỉ hoàn thành tốt công việc mà còn lan tỏa giá trị, truyền cảm hứng sáng tạo, thúc đẩy đồng đội và tạo ra tác động tích cực đến cả tổ chức. Với tinh thần học hỏi, dám nghĩ dám làm và sẵn sàng đón nhận những cơ hội mới, Top Talent chính là những người kiến tạo tương lai của Sun*.",
+  "award_detail_top_project_desc": "Giải thưởng Top Project vinh danh các tập thể dự án xuất sắc với kết quả vận hành nổi bật, hiệu quả sản xuất và sự linh hoạt trong làm việc với khách hàng. Đây là các dự án đã có sự đổi mới về phương pháp kỹ thuật cao, hiệu quả tài chính nổi bật và tạo ra giá trị to lớn cho tổ chức và khách hàng. Cùng với đó là sự đóng góp của những cá nhân xuất sắc đã mang đến thành công vượt trội cho dự án. Giải thưởng cũng ghi nhận những nỗ lực trong việc xây dựng quy trình chuẩn phát triển và tối ưu hóa trong quá trình phát triển dự án, tạo nên mô hình mẫu về sự xuất sắc và sự chuyên nghiệp.",
+  "award_detail_top_project_leader_desc": "Giải thưởng Top Project Leader vinh danh những nhà quản lý dự án xuất sắc - những người luôn hết sức nỗ lực tận tâm, và tự duy \"Aim High – Be Agile!\" trong mọi hoạt động. Họ là những Project Manager hoặc người đảm nhận vai trò dẫn dắt dự án ở cấp quản lý. Những người đã vượt qua mọi thử thách và đã đạt được thành công nổi bật, thể hiện khả năng lãnh đạo xuất sắc, sự sáng tạo trong công nghệ, tinh thần Team Master, và sự đóng góp đặc biệt trong việc phát triển đội nhóm và tạo ra giá trị bền vững cho tổ chức.",
+  "award_detail_best_manager_desc": "Giải thưởng Best Manager vinh danh những nhà lãnh đạo tiêu biểu – người đã dẫn dắt đội ngũ của mình vượt qua và kết quả vượt kỳ vọng, tạo động viên và kết nối, khơi nguồn cảm hứng và sự phát triển toàn diện cho đội nhóm. Được xây dựng với triết lý nuôi dưỡng con người và phát triển bền vững, Giải Best Manager ghi nhận những quản lý xuất sắc trong việc phát triển con người, nâng tầm năng lực đội nhóm và định hướng chiến lược. Họ không chỉ dẫn dắt mà còn truyền cảm hứng, tạo ra môi trường làm việc tích cực – nơi mỗi cá nhân đều có cơ hội phát huy hết khả năng và đóng góp vào sứ mệnh chung.",
+  "award_detail_signature_creator_desc": "Giải thưởng Signature vinh danh cá nhân hoặc tập thể thể hiện tinh thần và bản sắc của từng mùa Sun* Awards một cách rõ nét, trở thành biểu tượng đặc trưng trong từng thời kỳ. Trong năm 2025, giải thưởng Signature vinh danh Creator - cá nhân hoặc tập thể mang lại sự đổi mới và cải tiến phương pháp trong công việc, là những người dẫn đầu xu hướng, tạo ra những giải pháp sáng tạo, mang lại giá trị thiết thực cho khách hàng và tổ chức.",
+  "award_detail_mvp_desc": "Giải thưởng MVP vinh danh cá nhân xuất sắc nhất năm – gương mặt tiêu biểu nhất, tỏa sáng nhất và được cả Sun* ngưỡng mộ. Không chỉ là người đã đạt được thành tích đặc biệt xuất sắc trong công việc, MVP còn là biểu tượng của sự cống hiến, của tinh thần bứt phá, và là nguồn cảm hứng mạnh mẽ cho toàn bộ cộng đồng Sun*.",
+  "award_unit_individual": "Cá nhân",
+  "award_unit_team": "Tập thể",
+  "award_unit_individual_or_team": "Cá nhân hoặc tập thể",
+  "award_prize_note_each": "cho mỗi giải thưởng",
+  "award_prize_note_individual": "cho giải cá nhân",
+  "award_prize_note_team": "cho giải tập thể",
+
+  "countdown_error_message": "Không thể tải thông tin sự kiện. Vui lòng thử lại.",
+  "countdown_retry": "Thử lại",
+  "countdown_event_started": "Sự kiện đã bắt đầu",
+
+  "root_further_p1": "Đứng trước bối cảnh thay đổi như vũ bão của thời đại AI và yêu cầu ngày càng cao từ khách hàng, Sun* lựa chọn chiến lược đa dạng hóa năng lực để không chỉ nỗ lực trở thành tinh anh trong lĩnh vực của mình, mà còn hướng đến một cái đích cao hơn, nơi mỗi Sunner đều là \"problem-solver\" - chuyên gia trong việc giải quyết mọi vấn đề, tìm lời giải cho mọi bài toán của dự án, khách hàng và xã hội.",
+  "root_further_p2": "Lấy cảm hứng từ sự đa dạng năng lực, khả năng phát triển linh hoạt cùng tinh thần đào sâu để bứt phá trong kỷ nguyên AI, \"Root Further\" đã được chọn để trở thành chủ đề chính thức của Lễ trao giải Sun* Annual Awards 2025.",
+  "root_further_p3": "Vượt ra khỏi nét nghĩa bề mặt, \"Root Further\" chính là hành trình chúng ta không ngừng vươn xa hơn, cắm rễ mạnh hơn, chạm đến những tầng \"địa chất\" ẩn sâu để tiếp tục tồn tại, vươn lên và nuôi dưỡng đam mê kiến tạo giá trị luôn cháy bỏng của người Sun*. Muốn hình ảnh bộ rễ liên tục đâm sâu vào lòng đất, mạnh mẽ len lỏi qua từng lớp \"trầm tích\" để thấm thấu những gì tinh tuý nhất, người Sun* cũng đang \"hấp thụ\" dưỡng chất từ thời đại và những thử thách của thị trường để làm mới mình mỗi ngày, mở rộng năng lực và mạnh mẽ \"bén rễ\" vào kỷ nguyên AI - một tầng \"địa chất\" hoàn toàn mới, phức tạp và khó đoán, nhưng cũng hội tụ vô vàn tiềm năng cùng cơ hội.",
+  "root_further_quote": "A tree with deep roots fears no storm",
+  "root_further_quote_cite": "(Cây sâu bền rễ, bão giông chẳng nề - Ngạn ngữ Anh)",
+  "root_further_p4": "Trước giông bão, chỉ những tán cây có bộ rễ đủ mạnh mới có thể trụ vững. Một tổ chức với những cá nhân tự tìm vào năng lực đa dạng, sẵn sàng kiến tạo và đón nhận thử thách, làm chủ sự thay đổi là tổ chức không chỉ vững vàng trước biến động, mà còn khai thác được mọi lợi thế, chinh phục các thách thức của thời cuộc. Không đơn thuần là tên gọi của chương mới trên hành trình phát triển tổ chức, \"Root Further\" còn như một lời kêu gọi, đồng viên mỗi chúng ta hãy dám tin vào bản thân, dám đào sâu, khai mở mọi tiềm năng, dám phá bỏ giới hạn, đam trở thành phiên bản đa nhiệm và xuất sắc nhất của mình. Bởi trong thời đại AI, đa dạng năng lực và tận dụng sức mạnh thời cuộc chính là điều kiện tiên quyết để trường tồn.",
+  "root_further_p5": "Không ai biết trước ẩn sâu trong \"lòng đất\" của ngành công nghệ và thị trường hiện đại còn biết bao tầng \"địa chất\" bí ẩn. Chỉ biết rằng khi \"Root Further\" đã trở thành tinh thần cốt rễ, chúng ta sẽ không sợ hãi, mà càng thấy háo hức trước bất cứ vùng vỡ đình nào trên hành trình tiến về phía trước. Vì ta luôn tin rằng, trong chính những miền vô tận đó, là bao điều kỳ diệu và cơ hội vươn mình đang chờ ta."
 }

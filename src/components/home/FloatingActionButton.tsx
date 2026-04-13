@@ -4,14 +4,14 @@ import { useState } from "react";
 import { PencilIcon } from "@/components/shared/icons/PencilIcon";
 import { SAAWidgetIcon } from "@/components/shared/icons/SAAWidgetIcon";
 
-export function FloatingActionButton() {
+export function FloatingActionButton({ comingSoonLabel }: { comingSoonLabel: string }) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <div className="fixed bottom-6 right-6 z-50">
       {isOpen && (
         <div className="absolute bottom-20 right-0 w-48 bg-[var(--color-bg-primary)] border border-[var(--color-border)] rounded-lg p-4 shadow-lg">
-          <p className="text-sm text-white/60 text-center">Coming soon</p>
+          <p className="text-sm text-white/60 text-center">{comingSoonLabel}</p>
         </div>
       )}
       <button

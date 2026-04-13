@@ -4,16 +4,30 @@ import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { HamburgerIcon } from "@/components/shared/icons/HamburgerIcon";
+import { LanguageSelector } from "@/components/shared/LanguageSelector";
+import type { Language } from "@/types";
 
-const NAV_LINKS = [
-  { label: "About SAA 2025", href: "/" },
-  { label: "Award Information", href: "/awards" },
-  { label: "Sun* Kudos", href: "/sun-kudos" },
-];
+type NavLabels = {
+  aboutSaa: string;
+  awardInformation: string;
+  sunKudos: string;
+};
 
-export function MobileMenuButton() {
+export function MobileMenuButton({
+  currentLanguage,
+  navLabels,
+}: {
+  currentLanguage: Language;
+  navLabels: NavLabels;
+}) {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
+
+  const NAV_LINKS = [
+    { label: navLabels.aboutSaa, href: "/" },
+    { label: navLabels.awardInformation, href: "/awards" },
+    { label: navLabels.sunKudos, href: "/sun-kudos" },
+  ];
 
   useEffect(() => {
     function handleKeyDown(e: KeyboardEvent) {
@@ -112,6 +126,11 @@ export function MobileMenuButton() {
               );
             })}
           </nav>
+
+          {/* Language selector for mobile */}
+          <div className="mt-8">
+            <LanguageSelector currentLanguage={currentLanguage} />
+          </div>
         </div>
       )}
     </div>

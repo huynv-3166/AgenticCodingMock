@@ -1,10 +1,24 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { Language } from "@/types";
+import type { Dictionary } from "@/libs/i18n";
 import { AppHeaderClient } from "@/components/shared/AppHeaderClient";
 import { MobileMenuButton } from "@/components/shared/MobileMenuButton";
 
-export function AppHeader({ currentLanguage }: { currentLanguage: Language }) {
+export function AppHeader({
+  currentLanguage,
+  dictionary,
+}: {
+  currentLanguage: Language;
+  dictionary: Dictionary;
+}) {
+  const navLabels = {
+    aboutSaa: dictionary.nav_about_saa,
+    awardInformation: dictionary.nav_award_information,
+    sunKudos: dictionary.nav_sun_kudos,
+    comingSoon: dictionary.coming_soon,
+  };
+
   return (
     <header className="sticky top-0 z-50 w-full h-16 md:h-20 bg-[rgba(16,20,23,0.80)] backdrop-blur px-4 md:px-12 lg:px-[144px] py-3 flex items-center justify-between">
       {/* Left: Logo */}
@@ -19,10 +33,10 @@ export function AppHeader({ currentLanguage }: { currentLanguage: Language }) {
       </Link>
 
       {/* Center + Right: Desktop nav links and actions (handled by client component) */}
-      <AppHeaderClient currentLanguage={currentLanguage} />
+      <AppHeaderClient currentLanguage={currentLanguage} navLabels={navLabels} />
 
       {/* Mobile: Hamburger button (visible only below md) */}
-      <MobileMenuButton />
+      <MobileMenuButton currentLanguage={currentLanguage} navLabels={navLabels} />
     </header>
   );
 }

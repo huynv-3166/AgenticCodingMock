@@ -32,9 +32,23 @@ export default async function HomePage() {
 
   const targetDate = EVENT_CONFIG.event_start_date || null;
 
+  const awardDescriptions: Record<string, string> = {
+    "top-talent": dictionary.award_top_talent_desc,
+    "top-project": dictionary.award_top_project_desc,
+    "top-project-leader": dictionary.award_top_project_leader_desc,
+    "best-manager": dictionary.award_best_manager_desc,
+    "signature-2025-creator": dictionary.award_signature_creator_desc,
+    "mvp": dictionary.award_mvp_desc,
+  };
+
+  const localizedAwards = AWARD_CATEGORIES.map((award) => ({
+    ...award,
+    description: awardDescriptions[award.slug] ?? award.description,
+  }));
+
   return (
     <div className="relative flex flex-col min-h-screen bg-[var(--color-bg-primary)] overflow-x-hidden">
-      <AppHeader currentLanguage={locale} />
+      <AppHeader currentLanguage={locale} dictionary={dictionary} />
 
       <main className="flex-1 flex flex-col gap-[var(--spacing-section-gap)]">
         <HeroSection>
@@ -46,9 +60,9 @@ export default async function HomePage() {
             minutesLabel={dictionary.countdown_minutes}
           />
           <EventInfo
-            dateDisplay={EVENT_CONFIG.event_date_display}
-            location={EVENT_CONFIG.event_location}
-            livestreamInfo={EVENT_CONFIG.livestream_info}
+            dateDisplay={dictionary.event_date_display}
+            location={dictionary.event_location_value}
+            livestreamInfo={dictionary.event_livestream_info}
             timeLabel={dictionary.event_time_label}
             locationLabel={dictionary.event_location_label}
           />
@@ -58,7 +72,15 @@ export default async function HomePage() {
           />
         </HeroSection>
 
-        <RootFurtherContent />
+        <RootFurtherContent
+          p1={dictionary.root_further_p1}
+          p2={dictionary.root_further_p2}
+          p3={dictionary.root_further_p3}
+          quote={dictionary.root_further_quote}
+          quoteCite={dictionary.root_further_quote_cite}
+          p4={dictionary.root_further_p4}
+          p5={dictionary.root_further_p5}
+        />
 
         <section className="w-full max-w-[1224px] mx-auto px-4 md:px-12 lg:px-[var(--spacing-hero-px)] flex flex-col gap-20">
           <AwardSectionHeader
@@ -67,7 +89,7 @@ export default async function HomePage() {
             subtitle={dictionary.awards_subtitle}
           />
           <AwardGrid
-            awards={AWARD_CATEGORIES}
+            awards={localizedAwards}
             detailLabel={dictionary.awards_detail_link}
             emptyMessage={dictionary.awards_empty}
           />
@@ -82,8 +104,8 @@ export default async function HomePage() {
         />
       </main>
 
-      <AppFooter />
-      <FloatingActionButton />
+      <AppFooter dictionary={dictionary} />
+      <FloatingActionButton comingSoonLabel={dictionary.coming_soon} />
     </div>
   );
 }

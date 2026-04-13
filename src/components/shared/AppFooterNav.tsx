@@ -3,15 +3,22 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const NAV_LINKS = [
-  { label: "About SAA 2025", href: "/" },
-  { label: "Award Information", href: "/awards" },
-  { label: "Sun* Kudos", href: "/sun-kudos" },
-  { label: "Tiêu chuẩn chung", href: "/community-standards" },
-];
+type FooterNavLabels = {
+  aboutSaa: string;
+  awardInformation: string;
+  sunKudos: string;
+  communityStandards: string;
+};
 
-export function AppFooterNav() {
+export function AppFooterNav({ navLabels }: { navLabels: FooterNavLabels }) {
   const pathname = usePathname();
+
+  const NAV_LINKS = [
+    { label: navLabels.aboutSaa, href: "/" },
+    { label: navLabels.awardInformation, href: "/awards" },
+    { label: navLabels.sunKudos, href: "/sun-kudos" },
+    { label: navLabels.communityStandards, href: "/community-standards" },
+  ];
 
   return (
     <nav className="flex flex-wrap justify-center gap-12">

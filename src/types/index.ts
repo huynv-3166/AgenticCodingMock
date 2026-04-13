@@ -10,6 +10,12 @@ export const LANGUAGE_LABELS: Record<Language, string> = {
 
 export const DEFAULT_LANGUAGE: Language = "vi";
 
+export const LANGUAGE_FLAGS: Record<Language, string> = {
+  vi: "/assets/auth/login/vn-flag.svg",
+  en: "/assets/auth/login/en-flag.svg",
+  ja: "/assets/auth/login/ja-flag.svg",
+};
+
 export type AwardCategory = {
   id: string;
   title: string;

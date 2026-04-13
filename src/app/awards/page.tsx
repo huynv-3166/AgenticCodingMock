@@ -15,14 +15,45 @@ export default async function AwardsPage() {
   const locale = (cookieStore.get("NEXT_LOCALE")?.value ?? "vi") as Language;
   const dictionary = getDictionary(locale);
 
-  const sidebarCategories = AWARD_CATEGORIES_DETAIL.map((a) => ({
+  const awardDetailDescriptions: Record<string, string> = {
+    "top-talent": dictionary.award_detail_top_talent_desc,
+    "top-project": dictionary.award_detail_top_project_desc,
+    "top-project-leader": dictionary.award_detail_top_project_leader_desc,
+    "best-manager": dictionary.award_detail_best_manager_desc,
+    "signature-2025-creator": dictionary.award_detail_signature_creator_desc,
+    "mvp": dictionary.award_detail_mvp_desc,
+  };
+
+  const unitMap: Record<string, string> = {
+    "Cá nhân": dictionary.award_unit_individual,
+    "Tập thể": dictionary.award_unit_team,
+    "Cá nhân hoặc tập thể": dictionary.award_unit_individual_or_team,
+  };
+
+  const prizeNoteMap: Record<string, string> = {
+    "cho mỗi giải thưởng": dictionary.award_prize_note_each,
+    "cho giải cá nhân": dictionary.award_prize_note_individual,
+    "cho giải tập thể": dictionary.award_prize_note_team,
+  };
+
+  const localizedAwards = AWARD_CATEGORIES_DETAIL.map((award) => ({
+    ...award,
+    description: awardDetailDescriptions[award.id] ?? award.description,
+    unit: unitMap[award.unit] ?? award.unit,
+    prizeNote: prizeNoteMap[award.prizeNote] ?? award.prizeNote,
+    prizeNoteGroup: award.prizeNoteGroup
+      ? (prizeNoteMap[award.prizeNoteGroup] ?? award.prizeNoteGroup)
+      : undefined,
+  }));
+
+  const sidebarCategories = localizedAwards.map((a) => ({
     id: a.id,
     title: a.title,
   }));
 
   return (
     <div className="relative flex flex-col min-h-screen bg-[var(--color-bg-primary)]">
-      <AppHeader currentLanguage={locale} />
+      <AppHeader currentLanguage={locale} dictionary={dictionary} />
 
       <main className="flex-1 flex flex-col">
         <HeroBanner
@@ -34,7 +65,7 @@ export default async function AwardsPage() {
           sidebar={<AwardSidebar categories={sidebarCategories} />}
         >
           <AwardCardList
-            awards={AWARD_CATEGORIES_DETAIL}
+            awards={localizedAwards}
             quantityLabel={dictionary.awards_quantity_label}
             prizeLabel={dictionary.awards_prize_label}
             orDivider={dictionary.awards_or_divider}
@@ -42,15 +73,15 @@ export default async function AwardsPage() {
         </AwardContent>
 
         <KudosPromo
-          label={dictionary.kudos_label}
+          label={dictionary.awards_kudos_promo_label}
           title={dictionary.kudos_title}
           highlight={dictionary.kudos_highlight}
-          description={dictionary.kudos_description}
-          detailLabel={dictionary.kudos_detail}
+          description={dictionary.awards_kudos_promo_description}
+          detailLabel={dictionary.awards_kudos_promo_cta}
         />
       </main>
 
-      <AppFooter />
+      <AppFooter dictionary={dictionary} />
     </div>
   );
 }

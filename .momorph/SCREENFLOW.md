@@ -5,6 +5,46 @@
 
 ---
 
+## Countdown - Prelaunch Page
+
+| Property | Value |
+|---|---|
+| Screen ID | `8PJQswPZmU` |
+| Screen Name | Countdown - Prelaunch page |
+| Route | `/countdown` (or `/` when event not started) |
+| Auth Required | Yes (authenticated users only) |
+
+### Purpose
+
+Full-screen countdown landing page displayed before the SAA 2025 event officially launches. Shows a dramatic dark background with colorful abstract artwork and a prominent countdown timer (Days, Hours, Minutes) until the event begins.
+
+### Entry Points (Navigation TO this screen)
+
+| Source | Source Screen ID | Trigger |
+|---|---|---|
+| Login | `GzbNeVGJHz` | Successful login when event has not started yet |
+| Direct URL | - | User navigates to the site before event start (must be authenticated) |
+
+### Exit Points (Navigation FROM this screen)
+
+| Destination | Destination Screen ID | Trigger |
+|---|---|---|
+| Homepage SAA | `i87tDx10uM` | Countdown reaches zero (auto-redirect) |
+| Homepage SAA | `i87tDx10uM` | Event has already started (server-side redirect) |
+
+### Key Components
+
+| Component ID | Description |
+|---|---|
+| BG Image | Colorful abstract artwork background (positioned right side) |
+| Cover Gradient | Dark gradient overlay ensuring text readability |
+| Title | "Sự kiện sẽ bắt đầu sau" heading text (i18n key: `countdown_title`) |
+| Countdown Timer | 3 countdown units (Days, Hours, Minutes) with glassmorphism digit cards |
+| Digit Card | Glass-effect card with LED-style digit (Digital Numbers font) |
+| Unit Label | Text labels: DAYS, HOURS, MINUTES |
+
+---
+
 ## Login
 
 | Property | Value |
@@ -25,7 +65,8 @@
 
 | Destination | Destination Screen ID | Trigger |
 |---|---|---|
-| Homepage SAA | `i87tDx10uM` | Successful Google OAuth login |
+| Homepage SAA | `i87tDx10uM` | Successful Google OAuth login (when event has started) |
+| Countdown - Prelaunch | `8PJQswPZmU` | Successful Google OAuth login (when event has NOT started) |
 | Dropdown-ngon ngu | `hUyaaugye2` | Language selector click (opens dropdown overlay) |
 
 ### Key Components
@@ -51,8 +92,9 @@
 
 | Source | Trigger |
 |---|---|
-| Login | Successful Google OAuth login |
-| Direct URL | User navigates to `/` (must be authenticated) |
+| Login | Successful Google OAuth login (when event has started) |
+| Countdown - Prelaunch (`8PJQswPZmU`) | Countdown reaches zero (auto-redirect) or event already started |
+| Direct URL | User navigates to `/` (must be authenticated, event must have started) |
 | Any page header logo | Click SAA logo in header |
 
 ### Exit Points (Navigation FROM this screen)
@@ -79,6 +121,48 @@
 | D1_Sunkudos | Sun* Kudos promotional section with title, description, and "Chi tiet" button |
 | 6_Widget Button | Floating action button (bottom-right, pill shape, gold) |
 | 7_Footer | Footer with logo, nav links, community standards link, copyright |
+
+---
+
+## Dropdown-ngon ngu (Language Dropdown)
+
+| Property | Value |
+|---|---|
+| Screen ID | `hUyaaugye2` |
+| Screen Name | Dropdown-ngon ngu |
+| Route | N/A (overlay component, not a separate route) |
+| Auth Required | No (available on both public and authenticated screens) |
+
+### Purpose
+
+Language selection dropdown overlay that allows users to switch the application's display language. Shows the currently selected language (highlighted with gold background) and available language options, each with a country flag icon and language code. Supports Vietnamese (VN), English (EN), and Japanese (JA).
+
+### Entry Points (Navigation TO this screen)
+
+| Source | Source Screen ID | Trigger |
+|---|---|---|
+| Login | `GzbNeVGJHz` | Language selector button click in header |
+| Homepage SAA | `i87tDx10uM` | Language selector button click in header (desktop only, `>= md`) |
+| Hệ thống giải | `zFYDgyj_pD` | Language selector button click in header (desktop only, `>= md`) |
+| Any authenticated page with header | - | Language selector button click in header (desktop only, `>= md`) |
+
+> **Note**: Countdown - Prelaunch page does NOT have a header, so the language dropdown is not accessible from there. On authenticated pages, the language selector is hidden on mobile (`< 768px`) due to `AppHeaderClient` using `hidden md:flex`.
+
+### Exit Points (Navigation FROM this screen)
+
+| Destination | Destination Screen ID | Trigger |
+|---|---|---|
+| Same page (reloaded) | (same as source) | User selects a language option -> cookie set -> page reload with new locale |
+| Same page (no reload) | (same as source) | User clicks outside dropdown or presses Escape -> dropdown closes |
+
+### Key Components
+
+| Component ID | Description |
+|---|---|
+| A_Dropdown-List | Container dropdown with dark background (#00070C) and gold border (#998C5F), 8px border radius |
+| A.1_tieng Viet | Selected language item - Vietnam flag icon + "VN" label, gold highlight background |
+| A.2_tieng Anh | Language option item - UK flag icon + "EN" label, transparent background with hover effect |
+| A.3_tieng Nhat | Language option item - Japan flag icon + "JA" label, transparent background with hover effect (not in Figma, from codebase) |
 
 ---
 

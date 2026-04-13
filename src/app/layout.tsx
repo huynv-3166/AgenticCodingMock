@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
+import { cookies } from "next/headers";
 import { Montserrat, Montserrat_Alternates } from "next/font/google";
 import localFont from "next/font/local";
+import { type Language, LANGUAGES, DEFAULT_LANGUAGE } from "@/types";
 import "./globals.css";
 
 const montserrat = Montserrat({
@@ -27,13 +29,19 @@ export const metadata: Metadata = {
 	description: "Sun Annual Awards 2025 — Root Further",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
 	children,
 }: Readonly<{
 	children: React.ReactNode;
 }>) {
+	const cookieStore = await cookies();
+	const rawLocale = cookieStore.get("NEXT_LOCALE")?.value;
+	const locale: Language = (LANGUAGES as readonly string[]).includes(rawLocale ?? "")
+		? (rawLocale as Language)
+		: DEFAULT_LANGUAGE;
+
 	return (
-		<html lang="vi">
+		<html lang={locale}>
 			<head>
 				<link rel="icon" href="/favicon.svg" type="image/svg+xml"></link>
 			</head>

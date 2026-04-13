@@ -24,6 +24,10 @@ export { AwardGrid } from "./home/AwardGrid";
 export { KudosPromo } from "./home/KudosPromo";
 export { FloatingActionButton } from "./home/FloatingActionButton";
 
+// Countdown components
+export { PrelaunchCountdownTimer } from "./countdown/PrelaunchCountdownTimer";
+export { PrelaunchDigitCard } from "./countdown/PrelaunchDigitCard";
+
 // Awards components
 export { HeroBanner } from "./awards/HeroBanner";
 export { AwardSectionTitle } from "./awards/AwardSectionTitle";

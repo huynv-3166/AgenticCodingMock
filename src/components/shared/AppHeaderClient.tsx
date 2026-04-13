@@ -8,19 +8,27 @@ import { UserIcon } from "@/components/shared/icons/UserIcon";
 import { LanguageSelector } from "@/components/shared/LanguageSelector";
 import type { Language } from "@/types";
 
-const NAV_LINKS = [
-  { label: "About SAA 2025", href: "/" },
-  { label: "Award Information", href: "/awards" },
-  { label: "Sun* Kudos", href: "/sun-kudos" },
-] as const;
+type NavLabels = {
+  aboutSaa: string;
+  awardInformation: string;
+  sunKudos: string;
+  comingSoon: string;
+};
 
 type DropdownKey = "notification" | "profile";
 
 export function AppHeaderClient({
   currentLanguage,
+  navLabels,
 }: {
   currentLanguage: Language;
+  navLabels: NavLabels;
 }) {
+  const NAV_LINKS = [
+    { label: navLabels.aboutSaa, href: "/" },
+    { label: navLabels.awardInformation, href: "/awards" },
+    { label: navLabels.sunKudos, href: "/sun-kudos" },
+  ];
   const pathname = usePathname();
   const [openDropdown, setOpenDropdown] = useState<DropdownKey | null>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -98,13 +106,16 @@ export function AppHeaderClient({
           </button>
           {openDropdown === "notification" && (
             <div className="absolute right-0 top-full mt-2 w-64 bg-[#1a2330] border border-[var(--color-divider)] rounded-lg p-4 z-50">
-              <p className="text-sm text-white/60">Coming soon</p>
+              <p className="text-sm text-white/60">{navLabels.comingSoon}</p>
             </div>
           )}
         </div>
 
         {/* Language selector */}
-        <LanguageSelector currentLanguage={currentLanguage} />
+        <LanguageSelector
+          currentLanguage={currentLanguage}
+          onOpen={() => setOpenDropdown(null)}
+        />
 
         {/* Profile */}
         <div className="relative">
@@ -118,7 +129,7 @@ export function AppHeaderClient({
           </button>
           {openDropdown === "profile" && (
             <div className="absolute right-0 top-full mt-2 w-48 bg-[#1a2330] border border-[var(--color-divider)] rounded-lg p-4 z-50">
-              <p className="text-sm text-white/60">Coming soon</p>
+              <p className="text-sm text-white/60">{navLabels.comingSoon}</p>
             </div>
           )}
         </div>
