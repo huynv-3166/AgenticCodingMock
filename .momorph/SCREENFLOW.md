@@ -102,7 +102,7 @@ Full-screen countdown landing page displayed before the SAA 2025 event officiall
 | Destination | Destination Screen ID | Trigger |
 |---|---|---|
 | Awards Information | - | Header nav "Awards Information" click, CTA "ABOUT AWARDS" click, Award card click, Footer "Awards Information" link |
-| Sun* Kudos | - | Header nav "Sun* Kudos" click, CTA "ABOUT KUDOS" click, Kudos "Chi tiet" button, Footer "Sun* Kudos" link |
+| Sun* Kudos | `MaZUn5xHXZ` | Header nav "Sun* Kudos" click, CTA "ABOUT KUDOS" click, Kudos "Chi tiet" button, Footer "Sun* Kudos" link |
 | Dropdown-profile | `z4sCl3_Qtk` | Profile icon click (opens dropdown overlay) |
 | Dropdown-ngon ngu | `hUyaaugye2` | Language selector click (opens dropdown overlay) |
 | Notification panel | - | Bell icon click (opens notification panel) |
@@ -166,6 +166,59 @@ Language selection dropdown overlay that allows users to switch the application'
 
 ---
 
+## Sun* Kudos - Live Board
+
+| Property | Value |
+|---|---|
+| Screen ID | `MaZUn5xHXZ` |
+| Screen Name | Sun* Kudos - Live Board |
+| Route | `/kudos` |
+| Auth Required | Yes (authenticated users only) |
+
+### Purpose
+
+The central gratitude recognition page for SAA 2025. Displays a live feed of all kudos (thank-you messages between Sunners), a carousel of the top 5 most-hearted kudos, an interactive Spotlight Board word cloud visualization, personal statistics, and a leaderboard of recent gift recipients. Users can heart kudos, filter by hashtag/department, copy shareable links, and initiate sending new kudos.
+
+### Entry Points (Navigation TO this screen)
+
+| Source | Source Screen ID | Trigger |
+|---|---|---|
+| Homepage SAA | `i87tDx10uM` | Header nav "Sun* Kudos" click |
+| Homepage SAA | `i87tDx10uM` | CTA "ABOUT KUDOS" click |
+| Homepage SAA | `i87tDx10uM` | Kudos section "Chi tiet" button click |
+| Homepage SAA | `i87tDx10uM` | Footer "Sun* Kudos" link click |
+| Hệ thống giải | `zFYDgyj_pD` | "Chi tiet" button in Kudos promo section |
+| Direct URL | - | User navigates to `/kudos` (must be authenticated) |
+
+### Exit Points (Navigation FROM this screen)
+
+| Destination | Destination Screen ID | Trigger |
+|---|---|---|
+| Homepage SAA | `i87tDx10uM` | SAA logo click in header |
+| Awards Information | `zFYDgyj_pD` | Header nav "Awards Information" click |
+| Write Kudo dialog | `ihQ26W78P2` | "Ghi nhan" CTA click (pill-shaped input in hero) |
+| Hashtag filter dropdown | - | Hashtag filter button click (linked frame: 1002:13013) |
+| Department filter dropdown | - | Phong ban filter button click (linked frame: 721:5684) |
+| Profile preview popup | - | Avatar/name hover on any kudo card (linked frame: 721:5827) |
+| Secret Box dialog | - | "Mo qua" button click in sidebar (linked frame: 1466:7676) |
+| Dropdown-ngon ngu | `hUyaaugye2` | Language selector click in header |
+| Dropdown-profile | `z4sCl3_Qtk` | Profile icon click in header |
+
+### Key Components
+
+| Component ID | Description |
+|---|---|
+| A_Header | Top navigation with logo, nav links (About SAA 2025, Awards Information, Sun* Kudos active), notification bell, language selector, profile icon |
+| A_KV Kudos | Hero banner with title "He thong ghi nhan va cam on", KUDOS logo, Write Kudos CTA (pill input), and Search button |
+| B_Highlight | Highlight Kudos section: section header, Hashtag/Phong ban filter dropdowns, carousel of top 5 most-hearted kudo cards with prev/next navigation and page indicator |
+| B.7_Spotlight | Interactive Spotlight Board: word cloud/node diagram of kudo recipients, total KUDOS count label, search bar, pan/zoom toggle |
+| C_All kudos | All Kudos feed with infinite scroll: list of kudo post cards (sender, receiver, timestamp, message, images, hashtags, heart button, copy link) |
+| D_Sidebar | Right sidebar with personal stats (kudos received/sent, hearts, secret boxes) and "Mo qua" (Open Gift) button |
+| D.3_Leaderboard | "10 Sunner nhan qua moi nhat" scrollable leaderboard of recent gift recipients |
+| Footer | Footer with logo, nav links, community standards link, copyright |
+
+---
+
 ## Hệ thống giải (Award System)
 
 | Property | Value |
@@ -193,7 +246,7 @@ Displays all SAA 2025 award categories with descriptions, number of prizes, and 
 
 | Destination | Destination Screen ID | Trigger |
 |---|---|---|
-| Sun* Kudos | - | "Chi tiết" button click in the Kudos promotion section at bottom |
+| Sun* Kudos | `MaZUn5xHXZ` | "Chi tiết" button click in the Kudos promotion section at bottom |
 | Homepage SAA | `i87tDx10uM` | SAA logo click in header |
 
 ### Key Components

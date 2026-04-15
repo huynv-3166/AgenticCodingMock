@@ -16,6 +16,26 @@ export const LANGUAGE_FLAGS: Record<Language, string> = {
   ja: "/assets/auth/login/ja-flag.svg",
 };
 
+// Kudos types
+export type {
+  UserInfo,
+  Kudo,
+  KudoFeedResponse,
+  HighlightResponse,
+  KudoDetailResponse,
+  HeartResponse,
+  SpotlightNode,
+  SpotlightResponse,
+  UserStats,
+  GiftRecipient,
+  GiftRecipientsResponse,
+  Hashtag,
+  Department,
+  SecretBoxOpenResponse,
+  SpecialDayInfo,
+  KudoFilters,
+} from "./kudos";
+
 export type AwardCategory = {
   id: string;
   title: string;

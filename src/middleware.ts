@@ -47,11 +47,12 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(url);
   }
 
-  // TODO: Re-enable auth redirect after preview
+  // TODO: Re-enable auth redirect when ready for production
   // Redirect unauthenticated users to /login from protected routes
   // if (!user && !_isPublicRoute) {
   //   const url = request.nextUrl.clone();
   //   url.pathname = "/login";
+  //   url.searchParams.set("returnUrl", pathname);
   //   return NextResponse.redirect(url);
   // }
 

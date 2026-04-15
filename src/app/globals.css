@@ -87,6 +87,41 @@
   /* Text Shadow - Awards */
   --text-shadow-active: 0 4px 4px rgba(0, 0, 0, 0.25), 0 0 6px #FAE287;
 
+  /* === Kudos Page Design Tokens === */
+
+  /* Colors - Kudos */
+  --color-kudos-container: #00070C;
+  --color-kudos-card-bg: #FFF8E1;
+  --color-kudos-card-bg-content: rgba(255, 234, 158, 0.40);
+  --color-kudos-text-dark: #00101A;
+  --color-kudos-text-muted: #999999;
+  --color-kudos-hashtag: #D4271D;
+  --color-kudos-spotlight-highlight: #F17676;
+  --color-kudos-logo-text: #DBD1C1;
+
+  /* Spacing - Kudos */
+  --spacing-kudos-page-x: 144px;
+  --spacing-kudos-card-padding: 40px;
+  --spacing-kudos-card-padding-sm: 24px;
+  --spacing-kudos-card-bottom: 16px;
+  --spacing-kudos-sidebar-width: 422px;
+  --spacing-kudos-sidebar-gap: 80px;
+  --spacing-kudos-feed-gap: 24px;
+
+  /* Border & Radius - Kudos */
+  --radius-kudos-card: 24px;
+  --radius-kudos-pill: 68px;
+  --radius-kudos-avatar: 64px;
+  --radius-kudos-badge: 48px;
+  --radius-kudos-spotlight: 47.14px;
+  --radius-kudos-thumbnail: 18px;
+  --radius-kudos-sidebar: 17px;
+  --radius-kudos-content: 12px;
+  --border-kudos-standard: 1px solid #998C5F;
+  --border-kudos-highlight: 4px solid #FFEA9E;
+  --border-kudos-content: 1px solid #FFEA9E;
+  --border-kudos-avatar: 1.869px solid #FFFFFF;
+
   /* === Countdown Prelaunch Design Tokens === */
   --spacing-prelaunch-unit-gap: 60px;
   --spacing-prelaunch-digit-gap: 21px;

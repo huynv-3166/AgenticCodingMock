@@ -38,7 +38,7 @@ export function KudosPromoBlock({
             {description}
           </p>
           <Link
-            href="/kudos"
+            href="/sun-kudos"
             className="inline-flex items-center gap-2 px-4 py-4 rounded bg-[var(--color-button-bg)] text-[var(--color-button-text)] font-bold text-base leading-6 w-fit transition-all duration-200 hover:-translate-y-0.5 hover:brightness-110 focus-visible:outline-2 focus-visible:outline-[var(--color-primary)] focus-visible:outline-offset-2 motion-reduce:transition-none motion-reduce:hover:transform-none"
           >
             {ctaLabel}
