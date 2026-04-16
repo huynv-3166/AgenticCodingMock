@@ -219,6 +219,52 @@ The central gratitude recognition page for SAA 2025. Displays a live feed of all
 
 ---
 
+## Write Kudos (Viet Kudo)
+
+| Property | Value |
+|---|---|
+| Screen ID | `ihQ26W78P2` |
+| Screen Name | Viet Kudo (Write Kudos) |
+| Route | N/A (modal dialog, not a separate route) |
+| Auth Required | Yes (authenticated users only) |
+
+### Purpose
+
+Modal dialog that enables Sunners to compose and send kudos (thank-you/recognition messages) to colleagues. Features a rich text editor with formatting toolbar, recipient search with autocomplete, badge title input, hashtag tagging (1-5), image attachments (0-5), and an anonymous sending option. This is the sole entry point for creating new kudos in the SAA 2025 system.
+
+### Entry Points (Navigation TO this screen)
+
+| Source | Source Screen ID | Trigger |
+|---|---|---|
+| Sun* Kudos Live Board | `MaZUn5xHXZ` | "Ghi nhan" CTA click (pill-shaped input in hero section) |
+
+### Exit Points (Navigation FROM this screen)
+
+| Destination | Destination Screen ID | Trigger |
+|---|---|---|
+| Sun* Kudos Live Board | `MaZUn5xHXZ` | "Gui" (Send) button click (successful submission) |
+| Sun* Kudos Live Board | `MaZUn5xHXZ` | "Huy" (Cancel) button click |
+| Sun* Kudos Live Board | `MaZUn5xHXZ` | Click outside modal overlay |
+| Sun* Kudos Live Board | `MaZUn5xHXZ` | Press Escape key |
+| Community Standards | - | "Tieu chuan cong dong" link click in toolbar (opens in new tab/overlay) |
+
+### Key Components
+
+| Component ID | Description |
+|---|---|
+| A_Title | Modal title: "Gui loi cam on va ghi nhan den dong doi" (centered, Montserrat 32px bold) |
+| B_Nguoi nhan | Recipient search field with autocomplete dropdown (required, label + search input) |
+| C_Danh hieu | Badge title input with helper text (required, becomes kudos headline) |
+| D_Content | Rich text editor section containing toolbar, textarea, hint text, hashtags, and images |
+| D.Toolbar | Formatting toolbar: Bold, Italic, Strikethrough, Numbered List, Link, Quote, Community Standards link |
+| D.Textarea | Rich text area with @mention support (placeholder: "Hay gui gam loi cam on...") |
+| E_Hashtag | Hashtag section with label, chip group, and "+ Hashtag" add button (required, max 5) |
+| F_Image | Image upload section with thumbnails (80x80px) and "+ Image" add button (optional, max 5) |
+| G_Gui an danh | Anonymous checkbox: "Gui loi cam on va ghi nhan an danh" |
+| H_Actions | Action button bar: "Huy" (Cancel) and "Gui" (Send, golden #FFEA9E background) |
+
+---
+
 ## Hệ thống giải (Award System)
 
 | Property | Value |

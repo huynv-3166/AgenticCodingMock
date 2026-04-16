@@ -53,3 +53,4 @@ next-env.d.ts
 !.dev.vars.example
 .mcp.json
 mcp.json
+supabase/.env

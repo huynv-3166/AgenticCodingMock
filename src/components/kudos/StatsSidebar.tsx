@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import type { UserStats } from "@/types";
 
 interface StatsSidebarProps {
@@ -16,31 +17,44 @@ interface StatsSidebarProps {
   canOpenGift: boolean;
 }
 
+// Same event name as HeartButton uses
+const HEART_SYNC_EVENT = "kudo-heart-sync";
+
 export function StatsSidebar({
-  stats,
+  stats: initialStats,
   labels,
   onOpenGift,
   canOpenGift,
 }: StatsSidebarProps) {
+  const [stats, setStats] = useState(initialStats);
+
+  // Listen for heart changes and refetch stats from API
+  useEffect(() => {
+    const handler = () => {
+      fetch("/api/users/me/stats")
+        .then((res) => (res.ok ? (res.json() as Promise<UserStats>) : null))
+        .then((data) => {
+          if (data) setStats(data);
+        })
+        .catch(() => {});
+    };
+
+    window.addEventListener(HEART_SYNC_EVENT, handler);
+    return () => window.removeEventListener(HEART_SYNC_EVENT, handler);
+  }, []);
+
   return (
     <div className="w-full lg:w-[422px] p-6 bg-[var(--color-kudos-container)] rounded-[17px] border border-[var(--color-border)]">
       <div className="flex flex-col gap-4">
-        {/* Stats rows */}
         <StatRow label={labels.received} value={stats.kudos_received} />
         <StatRow label={labels.sent} value={stats.kudos_sent} />
         <StatRow label={labels.hearts} value={stats.hearts_received} />
 
-        {/* Divider */}
         <div className="w-full h-px bg-[var(--color-divider)]" />
 
-        {/* Secret box stats */}
         <StatRow label={labels.boxesOpened} value={stats.secret_boxes_opened} />
-        <StatRow
-          label={labels.boxesUnopened}
-          value={stats.secret_boxes_unopened}
-        />
+        <StatRow label={labels.boxesUnopened} value={stats.secret_boxes_unopened} />
 
-        {/* Open gift button */}
         <button
           onClick={onOpenGift}
           disabled={!canOpenGift}

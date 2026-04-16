@@ -1,6 +1,7 @@
 "use client";
 
 import { KudoUserInfo } from "./KudoUserInfo";
+import { KudoCardContent, formatTimestamp } from "./KudoCardContent";
 import { HeartButton } from "./HeartButton";
 import type { Kudo } from "@/types";
 
@@ -29,15 +30,6 @@ export function HighlightKudoCard({
     ? { user_id: "", name: labels.anonymous, avatar_url: null, department: "", department_code: "", star_level: 0 }
     : kudo.sender;
 
-  const formattedTime = new Date(kudo.created_at).toLocaleString("en-US", {
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: false,
-    month: "2-digit",
-    day: "2-digit",
-    year: "numeric",
-  }).replace(",", " -");
-
   return (
     <div
       className={`
@@ -58,37 +50,21 @@ export function HighlightKudoCard({
         <KudoUserInfo user={kudo.receiver} />
       </div>
 
-      {/* Divider */}
       <div className="w-full h-px bg-[var(--color-primary)]" />
 
-      {/* Content */}
-      <div className="flex flex-col gap-3">
-        <span className="font-bold text-base leading-6 tracking-[0.5px] text-[var(--color-kudos-text-muted)]">
-          {formattedTime}
-        </span>
-        <span className="font-bold text-base leading-6 tracking-[0.5px] text-[var(--color-kudos-text-dark)]">
-          {kudo.category}
-        </span>
-        <div className="p-3 md:py-4 md:px-6 border border-[var(--color-primary)] bg-[var(--color-kudos-card-bg-content)] rounded-xl">
-          <p className="font-bold text-base md:text-xl leading-6 md:leading-8 text-[var(--color-kudos-text-dark)] line-clamp-3">
-            {kudo.message}
-          </p>
-        </div>
-        {kudo.hashtags.length > 0 && (
-          <div className="flex flex-wrap gap-2">
-            {kudo.hashtags.map((tag) => (
-              <span key={tag} className="font-bold text-base leading-6 tracking-[0.5px] text-[var(--color-kudos-hashtag)]">
-                #{tag}
-              </span>
-            ))}
-          </div>
-        )}
-      </div>
+      {/* Shared content: timestamp, category, message, hashtags (no images in highlight) */}
+      <KudoCardContent
+        timestamp={formatTimestamp(kudo.created_at)}
+        category={kudo.category}
+        message={kudo.message}
+        hashtags={kudo.hashtags}
+        showImages={false}
+        messageLineClamp={3}
+      />
 
-      {/* Divider */}
       <div className="w-full h-px bg-[var(--color-primary)]" />
 
-      {/* Action row */}
+      {/* Action row — highlight has copy link + view detail */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <button className="px-3 py-2 rounded font-bold text-sm leading-6 text-[var(--color-kudos-text-dark)] hover:bg-black/5 transition-colors focus-visible:outline-2 focus-visible:outline-[var(--color-primary)] focus-visible:outline-offset-2">

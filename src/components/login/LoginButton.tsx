@@ -39,6 +39,7 @@ export function LoginButton({ dictionary }: { dictionary: Dictionary }) {
     }
   };
 
+
   return (
     <div className="pl-0 md:pl-[var(--spacing-content-left)]">
       <button
@@ -62,6 +63,41 @@ export function LoginButton({ dictionary }: { dictionary: Dictionary }) {
         <p className="mt-3 text-sm font-medium text-[var(--color-error)]">
           {errorMessage}
         </p>
+      )}
+
+      {/* Dev login — only visible in development */}
+      {process.env.NODE_ENV === "development" && (
+        <div className="mt-6 flex flex-col gap-2 max-w-[305px]">
+          <p className="text-xs text-white/40 font-bold">DEV LOGIN (local Supabase)</p>
+          {[
+            { email: "alice@sun-asterisk.com", name: "Alice Nguyen" },
+            { email: "bob@sun-asterisk.com", name: "Bob Tran" },
+            { email: "charlie@sun-asterisk.com", name: "Charlie Le" },
+          ].map((user) => (
+            <button
+              key={user.email}
+              disabled={isLoading}
+              onClick={async () => {
+                setIsLoading(true);
+                setErrorMessage(null);
+                const supabase = createClient();
+                const { error: err } = await supabase.auth.signInWithPassword({
+                  email: user.email,
+                  password: "password123",
+                });
+                if (err) {
+                  setErrorMessage(err.message);
+                  setIsLoading(false);
+                } else {
+                  window.location.href = "/";
+                }
+              }}
+              className="h-10 px-4 bg-white/10 border border-white/20 rounded-lg text-white text-sm font-bold hover:bg-white/20 disabled:opacity-50 transition-colors text-left"
+            >
+              {user.name} ({user.email.split("@")[0]})
+            </button>
+          ))}
+        </div>
       )}
     </div>
   );

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 
 interface HeartButtonProps {
   kudoId: string;
@@ -9,7 +9,20 @@ interface HeartButtonProps {
   isOwnKudo: boolean;
   specialDayActive: boolean;
   multiplier: number;
+  onHeartChange?: (kudoId: string, heartCount: number, isHearted: boolean) => void;
 }
+
+// Custom event for cross-component heart sync
+const HEART_SYNC_EVENT = "kudo-heart-sync";
+
+interface HeartSyncDetail {
+  kudoId: string;
+  heartCount: number;
+  isHearted: boolean;
+  source: string; // unique ID of the HeartButton that triggered it
+}
+
+let instanceCounter = 0;
 
 export function HeartButton({
   kudoId,
@@ -18,18 +31,36 @@ export function HeartButton({
   isOwnKudo,
   specialDayActive,
   multiplier,
+  onHeartChange,
 }: HeartButtonProps) {
+  const [instanceId] = useState(() => `hb-${++instanceCounter}`);
   const [isHearted, setIsHearted] = useState(initialIsHearted);
   const [count, setCount] = useState(initialCount);
   const [isPending, setIsPending] = useState(false);
 
-  const toggleHeart = useCallback(async () => {
-    if (isOwnKudo || isPending) return;
+  // Listen for heart sync events from other HeartButton instances
+  useEffect(() => {
+    const handler = (e: Event) => {
+      const detail = (e as CustomEvent<HeartSyncDetail>).detail;
+      if (detail.kudoId === kudoId && detail.source !== instanceId) {
+        setCount(detail.heartCount);
+        setIsHearted(detail.isHearted);
+      }
+    };
+    window.addEventListener(HEART_SYNC_EVENT, handler);
+    return () => window.removeEventListener(HEART_SYNC_EVENT, handler);
+  }, [kudoId, instanceId]);
 
-    // Optimistic update
+  const toggleHeart = useCallback(async () => {
+    if (isPending) return;
+
     const prevHearted = isHearted;
-    setIsHearted(!isHearted);
-    setCount(isHearted ? count - 1 : count + 1);
+    const prevCount = count;
+    const newHearted = !isHearted;
+    const newCount = Math.max(0, newHearted ? count + 1 : count - 1);
+
+    setIsHearted(newHearted);
+    setCount(newCount);
     setIsPending(true);
 
     try {
@@ -39,33 +70,43 @@ export function HeartButton({
 
       if (res.ok) {
         const data = (await res.json()) as { heart_count: number };
-        setCount(data.heart_count);
+        const serverCount = Math.max(0, data.heart_count);
+        setCount(serverCount);
+        setIsHearted(newHearted);
+
+        // Broadcast to all other HeartButton instances on the page
+        window.dispatchEvent(
+          new CustomEvent<HeartSyncDetail>(HEART_SYNC_EVENT, {
+            detail: { kudoId, heartCount: serverCount, isHearted: newHearted, source: instanceId },
+          })
+        );
+
+        onHeartChange?.(kudoId, serverCount, newHearted);
+      } else {
+        // 403 = own kudo, 409 = already hearted — rollback
+        setIsHearted(prevHearted);
+        setCount(prevCount);
       }
-      // If API fails, keep the optimistic state (no rollback)
-      // Rollback only when backend is connected and returns meaningful errors
     } catch {
-      // Network error — keep optimistic state for demo mode
+      setIsHearted(prevHearted);
+      setCount(prevCount);
     } finally {
       setIsPending(false);
     }
-  }, [kudoId, isHearted, count, isOwnKudo, isPending]);
+  }, [kudoId, isHearted, count, isOwnKudo, isPending, instanceId, onHeartChange]);
 
   return (
     <button
       onClick={toggleHeart}
-      disabled={isOwnKudo}
       aria-pressed={isHearted}
-      aria-disabled={isOwnKudo}
       aria-label={`${isHearted ? "Unlike" : "Like"} this kudo. ${count} hearts.`}
       className={`
-        flex items-center gap-1 transition-transform
-        ${isOwnKudo ? "opacity-40 cursor-not-allowed" : "cursor-pointer"}
-        ${!isOwnKudo && !isHearted ? "hover:scale-110" : ""}
+        flex items-center gap-1 transition-transform cursor-pointer
+        ${!isHearted ? "hover:scale-110" : ""}
         focus-visible:outline-2 focus-visible:outline-[var(--color-primary)] focus-visible:outline-offset-2
         motion-reduce:transition-none motion-reduce:hover:transform-none
       `}
     >
-      {/* Heart icon */}
       <svg
         width="32"
         height="32"
@@ -84,14 +125,12 @@ export function HeartButton({
         />
       </svg>
 
-      {/* x2 special day badge */}
       {specialDayActive && (
         <span className="inline-flex items-center px-1.5 py-0.5 rounded-full bg-[var(--color-primary)] text-[var(--color-kudos-text-dark)] font-bold text-xs leading-none">
           x{multiplier}
         </span>
       )}
 
-      {/* Count */}
       <span className="font-bold text-2xl leading-8 text-[var(--color-kudos-text-dark)]">
         {count}
       </span>

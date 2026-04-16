@@ -100,3 +100,46 @@ export type KudoFilters = {
   hashtag?: string;
   department?: string;
 };
+
+// === Write Kudos types ===
+
+export type CreateKudoPayload = {
+  recipient_id: string;
+  badge_title: string;
+  message: string; // HTML from TipTap editor
+  hashtag_ids: string[];
+  image_urls: string[];
+  is_anonymous: boolean;
+  anonymous_name?: string;
+  mentioned_user_ids?: string[];
+};
+
+export type CreateKudoResponse = {
+  data: Kudo;
+};
+
+export type UserSearchResult = {
+  user_id: string;
+  name: string;
+  avatar_url: string | null;
+  department: string;
+};
+
+export type ImageAttachment = {
+  url: string;
+  thumbnail_url: string;
+};
+
+export type WriteKudoFormState = {
+  recipient: UserSearchResult | null;
+  badgeTitle: string;
+  messageContent: string;
+  hashtags: Hashtag[];
+  images: ImageAttachment[];
+  isAnonymous: boolean;
+  anonymousName: string;
+  isSubmitting: boolean;
+  errors: Record<string, string>;
+  recipientQuery: string;
+  uploadingImages: number;
+};

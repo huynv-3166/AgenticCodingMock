@@ -110,8 +110,8 @@ BEGIN
       WHERE user_id = (SELECT sender_id FROM kudos WHERE id = NEW.kudo_id);
     RETURN NEW;
   ELSIF TG_OP = 'DELETE' THEN
-    UPDATE kudos SET heart_count = heart_count - 1 WHERE id = OLD.kudo_id;
-    UPDATE user_profiles SET heart_received_count = heart_received_count - OLD.multiplier
+    UPDATE kudos SET heart_count = GREATEST(heart_count - 1, 0) WHERE id = OLD.kudo_id;
+    UPDATE user_profiles SET heart_received_count = GREATEST(heart_received_count - OLD.multiplier, 0)
       WHERE user_id = (SELECT sender_id FROM kudos WHERE id = OLD.kudo_id);
     RETURN OLD;
   END IF;
@@ -147,7 +147,7 @@ CREATE POLICY "kudo_images_insert" ON kudo_images FOR INSERT TO authenticated
 ALTER TABLE hearts ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "hearts_select" ON hearts FOR SELECT TO authenticated USING (true);
 CREATE POLICY "hearts_insert" ON hearts FOR INSERT TO authenticated
-  WITH CHECK (auth.uid() = user_id AND auth.uid() != (SELECT sender_id FROM kudos WHERE id = kudo_id));
+  WITH CHECK (auth.uid() = user_id);
 CREATE POLICY "hearts_delete" ON hearts FOR DELETE TO authenticated USING (auth.uid() = user_id);
 
 -- user_profiles

@@ -1,16 +1,16 @@
 "use client";
 
-import { useState, useCallback, Suspense } from "react";
+import { useState, useCallback, useRef, Suspense } from "react";
+import dynamic from "next/dynamic";
 import { KudosSectionHeader } from "./KudosSectionHeader";
 import { FilterBar } from "./FilterBar";
 import { KudoFeed } from "./KudoFeed";
+import type { KudoFeedHandle } from "./KudoFeed";
+import { KudosHero } from "./KudosHero";
 import { HighlightCarousel } from "./HighlightCarousel";
 import { StatsSidebar } from "./StatsSidebar";
 import { SunnerLeaderboard } from "./SunnerLeaderboard";
-import {
-  SPOTLIGHT_NAMES as spotlightNames,
-  SPOTLIGHT_TOTAL_KUDOS as spotlightTotal,
-} from "@/libs/data/spotlight-mock";
+// Mock spotlight data removed — using real data from Supabase
 import type {
   Kudo,
   UserStats,
@@ -18,12 +18,26 @@ import type {
   SpecialDayInfo,
   KudoFilters,
 } from "@/types";
+import type { Dictionary } from "@/libs/i18n";
+
+// Dynamic import — keeps TipTap out of server bundle (Cloudflare Workers safe)
+const WriteKudoModal = dynamic(
+  () => import("./write/WriteKudoModal").then((m) => ({ default: m.WriteKudoModal })),
+  { ssr: false }
+);
 
 interface KudosPageClientProps {
   initialKudos: Kudo[];
   stats: UserStats;
   gifts: GiftRecipient[];
   specialDay: SpecialDayInfo;
+  spotlightData: { totalKudos: number; names: { name: string; kudoCount: number }[] };
+  dictionary: Dictionary;
+  heroLabels: {
+    heroTitle: string;
+    writePlaceholder: string;
+    searchLabel: string;
+  };
   labels: {
     sectionSubtitle: string;
     sectionHighlight: string;
@@ -54,9 +68,17 @@ export function KudosPageClient({
   stats,
   gifts,
   specialDay,
+  spotlightData,
+  dictionary,
+  heroLabels,
   labels,
 }: KudosPageClientProps) {
   const [filters, setFilters] = useState<KudoFilters>({});
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [highlightKudos, setHighlightKudos] = useState(initialKudos.slice(0, 5));
+  const kudoFeedRef = useRef<KudoFeedHandle>(null);
+
+  const [spotlightSearch, setSpotlightSearch] = useState("");
 
   const handleFilterChange = useCallback((newFilters: KudoFilters) => {
     setFilters(newFilters);
@@ -66,8 +88,45 @@ export function KudosPageClient({
     setFilters((prev) => ({ ...prev, hashtag }));
   }, []);
 
+  const handleOpenModal = useCallback(() => {
+    setIsModalOpen(true);
+  }, []);
+
+  const handleCloseModal = useCallback(() => {
+    setIsModalOpen(false);
+  }, []);
+
+  const handleKudoCreated = useCallback(() => {
+    // Refresh All Kudos feed
+    kudoFeedRef.current?.resetFeed();
+
+    // Refresh Highlight Kudos by fetching latest from API
+    fetch("/api/kudos?limit=5")
+      .then((res) => (res.ok ? (res.json() as Promise<{ data: Kudo[] }>) : null))
+      .then((json) => {
+        if (json?.data) setHighlightKudos(json.data);
+      })
+      .catch(() => {});
+  }, []);
+
   return (
     <>
+      {/* Hero — rendered here so onOpenWriteModal can be wired as client callback */}
+      <KudosHero
+        heroTitle={heroLabels.heroTitle}
+        writePlaceholder={heroLabels.writePlaceholder}
+        searchLabel={heroLabels.searchLabel}
+        onOpenWriteModal={handleOpenModal}
+      />
+
+      {/* Write Kudos Modal */}
+      <WriteKudoModal
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        onSuccess={handleKudoCreated}
+        dictionary={dictionary}
+      />
+
       {/* Highlight Kudos Section */}
       <section className="mt-[60px] md:mt-[120px]">
         <KudosSectionHeader
@@ -84,7 +143,7 @@ export function KudosPageClient({
         </KudosSectionHeader>
         <div className="mt-4 md:mt-6">
           <HighlightCarousel
-            kudos={initialKudos.slice(0, 5)}
+            kudos={highlightKudos}
             specialDayActive={specialDay.active}
             specialDayMultiplier={specialDay.multiplier}
             labels={{
@@ -115,24 +174,44 @@ export function KudosPageClient({
             />
             <div className="absolute inset-0 bg-black/50" aria-hidden="true" />
 
-            {/* Word cloud names from mock data */}
-            <div className="absolute inset-0 overflow-hidden" aria-hidden="true">
-              {spotlightNames.map((item, i) => (
-                <span
-                  key={i}
-                  className={`absolute font-bold whitespace-nowrap cursor-default select-none ${
-                    item.highlight ? "text-[#F17676]" : "text-white"
-                  }`}
-                  style={{
-                    left: `${item.x}%`,
-                    top: `${item.y}%`,
-                    fontSize: `${item.size}px`,
-                    opacity: item.opacity,
-                  }}
-                >
-                  {item.name}
-                </span>
-              ))}
+            {/* Word cloud names — contained below header area */}
+            <div className="absolute left-4 right-4 md:left-8 md:right-8 top-16 md:top-20 bottom-4 md:bottom-8 overflow-hidden" aria-hidden="true">
+              {spotlightData.names.map((item, i) => {
+                const maxCount = spotlightData.names[0]?.kudoCount ?? 1;
+                const ratio = item.kudoCount / Math.max(maxCount, 1);
+                const fontSize = 14 + ratio * 22;
+                const isTop = i === 0;
+                const col = i % 3;
+                const row = Math.floor(i / 3);
+                const x = 10 + col * 30 + ((i * 7) % 15);
+                const y = 10 + row * 18 + ((i * 11) % 10);
+
+                // Search highlight logic
+                const searchTerm = spotlightSearch.trim().toLowerCase();
+                const isMatch = searchTerm.length > 0 && item.name.toLowerCase().includes(searchTerm);
+                const isDimmed = searchTerm.length > 0 && !isMatch;
+                const opacity = isDimmed ? 0.15 : (0.5 + ratio * 0.5);
+
+                let colorClass = "text-white";
+                if (isMatch) colorClass = "text-[#FFEA9E]"; // gold highlight for search match
+                else if (isTop && !isDimmed) colorClass = "text-[#F17676]";
+
+                return (
+                  <span
+                    key={item.name + i}
+                    className={`absolute font-bold whitespace-nowrap cursor-default select-none transition-all duration-300 ${colorClass}`}
+                    style={{
+                      left: `${Math.min(x, 85)}%`,
+                      top: `${Math.min(y, 85)}%`,
+                      fontSize: isMatch ? `${fontSize + 4}px` : `${fontSize}px`,
+                      opacity,
+                      transform: isMatch ? "scale(1.15)" : "scale(1)",
+                    }}
+                  >
+                    {item.name}
+                  </span>
+                );
+              })}
             </div>
 
             {/* UI overlay */}
@@ -152,6 +231,8 @@ export function KudosPageClient({
                   </svg>
                   <input
                     type="text"
+                    value={spotlightSearch}
+                    onChange={(e) => setSpotlightSearch(e.target.value)}
                     placeholder={labels.filterHashtag === "Hashtag" ? "Search" : "Tìm kiếm"}
                     maxLength={100}
                     className="w-[140px] md:w-[180px] pl-9 pr-3 py-2 rounded-full border border-[var(--color-border)] bg-transparent text-white text-sm font-medium placeholder:text-white/50 focus:border-[var(--color-primary)] focus:outline-none transition-colors"
@@ -161,7 +242,7 @@ export function KudosPageClient({
                 {/* 388 KUDOS — centered */}
                 <div className="flex-1 text-center z-10">
                   <span className="font-bold text-xl md:text-[36px] md:leading-[44px] text-white">
-                    {spotlightTotal} KUDOS
+                    {spotlightData.totalKudos} KUDOS
                   </span>
                 </div>
 
@@ -184,6 +265,7 @@ export function KudosPageClient({
           {/* Feed with infinite scroll */}
           <div className="flex-1 max-w-[680px]">
             <KudoFeed
+              ref={kudoFeedRef}
               initialKudos={initialKudos}
               initialCursor={
                 initialKudos.length === 10

@@ -27,13 +27,7 @@ export async function POST(
     return NextResponse.json({ error: "Kudo not found" }, { status: 404 });
   }
 
-  // Cannot heart own kudo
-  if (kudo.sender_id === user.id) {
-    return NextResponse.json(
-      { error: "Cannot heart own kudo" },
-      { status: 403 }
-    );
-  }
+  // Self-like allowed — no restriction on hearting own kudos
 
   // Get current special day multiplier
   const today = new Date().toISOString().split("T")[0];

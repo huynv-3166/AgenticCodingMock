@@ -34,6 +34,11 @@ export type {
   SecretBoxOpenResponse,
   SpecialDayInfo,
   KudoFilters,
+  CreateKudoPayload,
+  CreateKudoResponse,
+  UserSearchResult,
+  ImageAttachment,
+  WriteKudoFormState,
 } from "./kudos";
 
 export type AwardCategory = {

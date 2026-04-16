@@ -4,12 +4,14 @@ interface KudosHeroProps {
   heroTitle: string;
   writePlaceholder: string;
   searchLabel: string;
+  onOpenWriteModal?: () => void;
 }
 
 export function KudosHero({
   heroTitle,
   writePlaceholder,
   searchLabel,
+  onOpenWriteModal,
 }: KudosHeroProps) {
   return (
     <section className="relative w-full h-[400px] md:h-[512px] overflow-hidden">
@@ -54,6 +56,7 @@ export function KudosHero({
         <div className="flex flex-col md:flex-row gap-3 md:gap-6">
           {/* Write Kudos CTA — pill shape 738x72 per design-style */}
           <button
+            onClick={onOpenWriteModal}
             className="flex items-center gap-3 w-full md:w-[738px] h-14 md:h-[72px] px-4 md:px-6 rounded-[68px] border border-[#998C5F] bg-[rgba(255,234,158,0.10)] text-white font-bold text-sm md:text-base leading-6 tracking-[0.15px] transition-colors hover:bg-[rgba(255,234,158,0.20)] hover:border-[#FFEA9E] focus-visible:outline-2 focus-visible:outline-[#FFEA9E] focus-visible:outline-offset-2"
           >
             {/* Pen icon — from Figma */}

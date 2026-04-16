@@ -1,8 +1,12 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback, forwardRef, useImperativeHandle } from "react";
 import { KudoCard } from "./KudoCard";
 import type { Kudo, KudoFilters } from "@/types";
+
+export type KudoFeedHandle = {
+  resetFeed: () => void;
+};
 
 interface KudoFeedProps {
   initialKudos: Kudo[];
@@ -20,14 +24,14 @@ interface KudoFeedProps {
   onFilterByHashtag?: (hashtag: string) => void;
 }
 
-export function KudoFeed({
+export const KudoFeed = forwardRef<KudoFeedHandle, KudoFeedProps>(function KudoFeed({
   initialKudos,
   initialCursor,
   filters,
   specialDayActive: _specialDayActive,
   labels,
   onFilterByHashtag: _onFilterByHashtag,
-}: KudoFeedProps) {
+}, ref) {
   // These props will be used in US2 (heart) and US4 (filter) phases
   void _specialDayActive;
   void _onFilterByHashtag;
@@ -37,6 +41,25 @@ export function KudoFeed({
   const [feedError, setFeedError] = useState<string | null>(null);
   const [isInitialLoading, setIsInitialLoading] = useState(false);
   const sentinelRef = useRef<HTMLDivElement>(null);
+
+  // Expose resetFeed to parent via ref
+  useImperativeHandle(ref, () => ({
+    resetFeed: () => {
+      setIsInitialLoading(true);
+      setFeedError(null);
+      fetch("/api/kudos?limit=10")
+        .then((r) => {
+          if (!r.ok) throw new Error("Failed to fetch");
+          return r.json() as Promise<{ data: Kudo[]; nextCursor: string | null }>;
+        })
+        .then((json) => {
+          setKudos(json.data ?? []);
+          setCursor(json.nextCursor ?? null);
+        })
+        .catch(() => setFeedError(labels.connectionLost))
+        .finally(() => setIsInitialLoading(false));
+    },
+  }), [labels.connectionLost]);
 
   // Track if filters have been changed by user (skip initial mount)
   const hasFiltersChanged = useRef(false);
@@ -215,4 +238,4 @@ export function KudoFeed({
       )}
     </div>
   );
-}
+});
