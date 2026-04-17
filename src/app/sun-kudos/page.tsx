@@ -37,8 +37,8 @@ export default async function SunKudosPage() {
 
   let kudos: Kudo[] = [];
   let stats: UserStats = { kudos_received: 0, kudos_sent: 0, hearts_received: 0, secret_boxes_opened: 0, secret_boxes_unopened: 0 };
-  let gifts: GiftRecipient[] = [];
-  let specialDay: SpecialDayInfo = { active: false, multiplier: 1 };
+  const gifts: GiftRecipient[] = [];
+  const specialDay: SpecialDayInfo = { active: false, multiplier: 1 };
   let spotlightData: { totalKudos: number; names: { name: string; kudoCount: number }[] } = { totalKudos: 0, names: [] };
 
   try {

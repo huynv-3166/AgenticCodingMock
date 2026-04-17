@@ -20,8 +20,7 @@ export async function middleware(request: NextRequest) {
   } = await supabase.auth.getUser();
 
   const pathname = request.nextUrl.pathname;
-  // Used by the TODO auth redirect block below — kept for when it's re-enabled
-  const _isPublicRoute = PUBLIC_ROUTES.some((route) =>
+  const isPublicRoute = PUBLIC_ROUTES.some((route) =>
     pathname.startsWith(route)
   );
   const eventHasStarted = isEventStarted();
@@ -47,14 +46,13 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(url);
   }
 
-  // TODO: Re-enable auth redirect when ready for production
   // Redirect unauthenticated users to /login from protected routes
-  // if (!user && !_isPublicRoute) {
-  //   const url = request.nextUrl.clone();
-  //   url.pathname = "/login";
-  //   url.searchParams.set("returnUrl", pathname);
-  //   return NextResponse.redirect(url);
-  // }
+  if (!user && !isPublicRoute) {
+    const url = request.nextUrl.clone();
+    url.pathname = "/login";
+    url.searchParams.set("returnUrl", pathname);
+    return NextResponse.redirect(url);
+  }
 
   // Add security headers
   const response = supabaseResponse;
