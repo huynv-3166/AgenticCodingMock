@@ -48,6 +48,12 @@ export function HighlightCarousel({
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [currentPage, goTo]);
 
+  // Clamp currentPage to the new range when the kudos list changes (e.g. filter applied)
+  useEffect(() => {
+    if (totalPages === 0) return;
+    if (currentPage > totalPages) setCurrentPage(1);
+  }, [totalPages, currentPage]);
+
   if (kudos.length === 0) {
     return (
       <p className="font-bold text-base text-[var(--color-kudos-text-muted)] text-center py-20">

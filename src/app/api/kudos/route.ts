@@ -2,6 +2,14 @@ import { NextResponse } from "next/server";
 import { createClient } from "@/libs/supabase/server";
 import { kudoFeedParamsSchema, createKudoSchema } from "@/libs/validations/kudos";
 import { sanitizeKudoHtml } from "@/libs/utils/sanitize";
+import {
+  fetchProfileMapForKudos,
+  formatKudo,
+  resolveDepartmentReceiverIds,
+  resolveHashtagKudoIds,
+} from "@/libs/kudos/queries";
+
+const emptyFeed = { data: [], nextCursor: null, total: 0 };
 
 export async function GET(request: Request) {
   const supabase = await createClient();
@@ -30,6 +38,14 @@ export async function GET(request: Request) {
 
   const { cursor, limit, hashtag, department } = parsed.data;
 
+  const hashtagKudoIds = await resolveHashtagKudoIds(supabase, hashtag);
+  const departmentReceiverIds = await resolveDepartmentReceiverIds(supabase, department);
+
+  // An empty array means "filter applied but no matches" — short-circuit.
+  if (hashtagKudoIds?.length === 0 || departmentReceiverIds?.length === 0) {
+    return NextResponse.json(emptyFeed);
+  }
+
   // Query kudos (no direct FK to user_profiles — join separately)
   let query = supabase
     .from("kudos")
@@ -45,9 +61,9 @@ export async function GET(request: Request) {
     .order("created_at", { ascending: false })
     .limit(limit);
 
-  if (cursor) {
-    query = query.lt("created_at", cursor);
-  }
+  if (cursor) query = query.lt("created_at", cursor);
+  if (hashtagKudoIds) query = query.in("id", hashtagKudoIds);
+  if (departmentReceiverIds) query = query.in("receiver_id", departmentReceiverIds);
 
   const { data: kudos, error, count } = await query;
 
@@ -55,49 +71,8 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 
-  // Collect user IDs and fetch profiles separately
-  const userIds = new Set<string>();
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  for (const k of (kudos ?? []) as any[]) {
-    if (k.sender_id) userIds.add(k.sender_id);
-    if (k.receiver_id) userIds.add(k.receiver_id);
-  }
-
-  const { data: profiles } = userIds.size > 0
-    ? await supabase
-        .from("user_profiles")
-        .select("user_id, display_name, star_level, department:departments(name, code)")
-        .in("user_id", Array.from(userIds))
-    : { data: [] };
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const profileMap = new Map((profiles ?? []).map((p: any) => [p.user_id, p]));
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const formattedKudos = (kudos ?? []).map((kudo: any) => ({
-    id: kudo.id,
-    sender: formatUserInfo(profileMap.get(kudo.sender_id), kudo.is_anonymous),
-    receiver: formatUserInfo(profileMap.get(kudo.receiver_id), false),
-    message: kudo.message,
-    category: kudo.category,
-    hashtags: (kudo.hashtags ?? []).map(
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (h: any) => {
-        const ht = Array.isArray(h.hashtag) ? h.hashtag[0] : h.hashtag;
-        return ht?.name ?? "";
-      }
-    ),
-    images: (kudo.images ?? [])
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      .sort((a: any, b: any) => (a.display_order ?? 0) - (b.display_order ?? 0))
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      .map((i: any) => i.image_url),
-    heart_count: kudo.heart_count,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    is_hearted_by_me: (kudo.hearts ?? []).some((h: any) => h.user_id === user.id),
-    is_anonymous: kudo.is_anonymous,
-    created_at: kudo.created_at,
-  }));
+  const profileMap = await fetchProfileMapForKudos(supabase, kudos ?? []);
+  const formattedKudos = (kudos ?? []).map((kudo) => formatKudo(kudo, profileMap, user.id));
 
   const lastItem = formattedKudos[formattedKudos.length - 1];
   const nextCursor = formattedKudos.length === limit ? lastItem?.created_at ?? null : null;
@@ -225,25 +200,3 @@ export async function POST(request: Request) {
   }
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function formatUserInfo(profile: any, isAnonymous: boolean) {
-  if (!profile || isAnonymous) {
-    return {
-      user_id: "",
-      name: "",
-      avatar_url: null,
-      department: "",
-      department_code: "",
-      star_level: 0,
-    };
-  }
-  const dept = Array.isArray(profile.department) ? profile.department[0] : profile.department;
-  return {
-    user_id: profile.user_id ?? "",
-    name: profile.display_name ?? "",
-    avatar_url: null,
-    department: dept?.name ?? "",
-    department_code: dept?.code ?? "",
-    star_level: profile.star_level ?? 0,
-  };
-}

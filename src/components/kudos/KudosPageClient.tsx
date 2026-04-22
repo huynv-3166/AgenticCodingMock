@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useRef, Suspense } from "react";
+import { useState, useCallback, useRef, useEffect, Suspense } from "react";
 import dynamic from "next/dynamic";
 import { KudosSectionHeader } from "./KudosSectionHeader";
 import { FilterBar } from "./FilterBar";
@@ -28,6 +28,7 @@ const WriteKudoModal = dynamic(
 
 interface KudosPageClientProps {
   initialKudos: Kudo[];
+  initialHighlightKudos: Kudo[];
   stats: UserStats;
   gifts: GiftRecipient[];
   specialDay: SpecialDayInfo;
@@ -65,6 +66,7 @@ interface KudosPageClientProps {
 
 export function KudosPageClient({
   initialKudos,
+  initialHighlightKudos,
   stats,
   gifts,
   specialDay,
@@ -75,7 +77,7 @@ export function KudosPageClient({
 }: KudosPageClientProps) {
   const [filters, setFilters] = useState<KudoFilters>({});
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [highlightKudos, setHighlightKudos] = useState(initialKudos.slice(0, 5));
+  const [highlightKudos, setHighlightKudos] = useState(initialHighlightKudos);
   const kudoFeedRef = useRef<KudoFeedHandle>(null);
 
   const [spotlightSearch, setSpotlightSearch] = useState("");
@@ -83,6 +85,26 @@ export function KudosPageClient({
   const handleFilterChange = useCallback((newFilters: KudoFilters) => {
     setFilters(newFilters);
   }, []);
+
+  // Keep the highlight carousel in sync with the active filter.
+  // Without a filter, reuse the SSR highlight (already top-5 by heart_count).
+  useEffect(() => {
+    if (!filters.hashtag && !filters.department) {
+      setHighlightKudos(initialHighlightKudos);
+      return;
+    }
+
+    const params = new URLSearchParams();
+    if (filters.hashtag) params.set("hashtag", filters.hashtag);
+    if (filters.department) params.set("department", filters.department);
+
+    fetch(`/api/kudos/highlight?${params.toString()}`)
+      .then((res) => (res.ok ? (res.json() as Promise<{ data: Kudo[] }>) : null))
+      .then((json) => {
+        if (json?.data) setHighlightKudos(json.data);
+      })
+      .catch(() => {});
+  }, [filters.hashtag, filters.department, initialHighlightKudos]);
 
   const handleFilterByHashtag = useCallback((hashtag: string) => {
     setFilters((prev) => ({ ...prev, hashtag }));
@@ -100,14 +122,19 @@ export function KudosPageClient({
     // Refresh All Kudos feed
     kudoFeedRef.current?.resetFeed();
 
-    // Refresh Highlight Kudos by fetching latest from API
-    fetch("/api/kudos?limit=5")
+    // Refresh Highlight Kudos against the heart-ranked endpoint (spec US3 AC#1).
+    const params = new URLSearchParams();
+    if (filters.hashtag) params.set("hashtag", filters.hashtag);
+    if (filters.department) params.set("department", filters.department);
+    const qs = params.toString();
+
+    fetch(qs ? `/api/kudos/highlight?${qs}` : "/api/kudos/highlight")
       .then((res) => (res.ok ? (res.json() as Promise<{ data: Kudo[] }>) : null))
       .then((json) => {
         if (json?.data) setHighlightKudos(json.data);
       })
       .catch(() => {});
-  }, []);
+  }, [filters.hashtag, filters.department]);
 
   return (
     <>

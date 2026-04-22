@@ -4,31 +4,16 @@ import { createClient } from "@/libs/supabase/server";
 import { AppHeader } from "@/components/shared/AppHeader";
 import { AppFooter } from "@/components/shared/AppFooter";
 import { KudosPageClient } from "@/components/kudos/KudosPageClient";
+import { fetchProfileMapForKudos, formatKudo } from "@/libs/kudos/queries";
 // Mock data removed — using Supabase as data source
-import type { Language, Kudo, UserInfo, UserStats, GiftRecipient, SpecialDayInfo } from "@/types";
+import type { Language, Kudo, UserStats, GiftRecipient, SpecialDayInfo } from "@/types";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function formatUserProfile(profile: any, isAnonymous: boolean): UserInfo {
-  if (!profile || isAnonymous) {
-    return {
-      user_id: "",
-      name: "",
-      avatar_url: null,
-      department: "",
-      department_code: "",
-      star_level: 0,
-    };
-  }
-  const dept = Array.isArray(profile.department) ? profile.department[0] : profile.department;
-  return {
-    user_id: profile.user_id ?? "",
-    name: profile.display_name ?? "",
-    avatar_url: null,
-    department: dept?.name ?? "",
-    department_code: dept?.code ?? "",
-    star_level: profile.star_level ?? 0,
-  };
-}
+const HIGHLIGHT_SELECT = `
+  id, sender_id, receiver_id, message, category, is_anonymous, heart_count, created_at,
+  hashtags:kudo_hashtags(hashtag:hashtags(name)),
+  images:kudo_images(image_url, display_order),
+  hearts!left(user_id)
+`;
 
 export default async function SunKudosPage() {
   const cookieStore = await cookies();
@@ -36,6 +21,7 @@ export default async function SunKudosPage() {
   const dictionary = getDictionary(locale);
 
   let kudos: Kudo[] = [];
+  let highlightKudos: Kudo[] = [];
   let stats: UserStats = { kudos_received: 0, kudos_sent: 0, hearts_received: 0, secret_boxes_opened: 0, secret_boxes_unopened: 0 };
   const gifts: GiftRecipient[] = [];
   const specialDay: SpecialDayInfo = { active: false, multiplier: 1 };
@@ -46,60 +32,33 @@ export default async function SunKudosPage() {
     const { data: { user } } = await supabase.auth.getUser();
 
     if (user) {
-      // Fetch kudos feed directly from Supabase
-      // Query kudos with basic fields only (no join to user_profiles — no direct FK)
-      const { data: kudosData, error: kudosError } = await supabase
-        .from("kudos")
-        .select(`
-          id, sender_id, receiver_id, message, category, is_anonymous, heart_count, created_at,
-          hashtags:kudo_hashtags(hashtag:hashtags(name)),
-          images:kudo_images(image_url, display_order),
-          hearts!left(user_id)
-        `)
-        .order("created_at", { ascending: false })
-        .limit(10);
+      // Run feed and highlight queries in parallel — they index on different columns.
+      const [feedResult, highlightResult] = await Promise.all([
+        supabase
+          .from("kudos")
+          .select(HIGHLIGHT_SELECT)
+          .order("created_at", { ascending: false })
+          .limit(10),
+        // Spec US3 AC#1: top 5 kudos with the most hearts (kudos with 0 hearts never appear).
+        supabase
+          .from("kudos")
+          .select(HIGHLIGHT_SELECT)
+          .order("heart_count", { ascending: false })
+          .gt("heart_count", 0)
+          .limit(5),
+      ]);
 
-      // Fetch all user profiles separately to resolve sender/receiver names
-      const userIds = new Set<string>();
-      for (const kudo of kudosData ?? []) {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const k = kudo as any;
-        if (k.sender_id) userIds.add(k.sender_id);
-        if (k.receiver_id) userIds.add(k.receiver_id);
-      }
+      const kudosData = feedResult.data;
+      const highlightData = highlightResult.data;
 
-      const { data: profilesData } = userIds.size > 0
-        ? await supabase
-            .from("user_profiles")
-            .select("user_id, display_name, star_level, department:departments(name, code)")
-            .in("user_id", Array.from(userIds))
-        : { data: [] };
+      // One profile lookup for both lists
+      const profileMap = await fetchProfileMapForKudos(supabase, [
+        ...(kudosData ?? []),
+        ...(highlightData ?? []),
+      ]);
 
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const profileMap = new Map((profilesData ?? []).map((p: any) => [p.user_id, p]));
-
-      if (kudosData && kudosData.length > 0) {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        kudos = kudosData.map((kudo: any) => ({
-          id: kudo.id,
-          sender: formatUserProfile(profileMap.get(kudo.sender_id), kudo.is_anonymous),
-          receiver: formatUserProfile(profileMap.get(kudo.receiver_id), false),
-          message: kudo.message,
-          category: kudo.category,
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          hashtags: (kudo.hashtags ?? []).map((h: any) => {
-            const tag = Array.isArray(h.hashtag) ? h.hashtag[0] : h.hashtag;
-            return tag?.name ?? "";
-          }),
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          images: (kudo.images ?? []).sort((a: any, b: any) => (a.display_order ?? 0) - (b.display_order ?? 0)).map((i: any) => i.image_url),
-          heart_count: kudo.heart_count,
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          is_hearted_by_me: (kudo.hearts ?? []).some((h: any) => h.user_id === user.id),
-          is_anonymous: kudo.is_anonymous,
-          created_at: kudo.created_at,
-        }));
-      }
+      kudos = (kudosData ?? []).map((k) => formatKudo(k, profileMap, user.id));
+      highlightKudos = (highlightData ?? []).map((k) => formatKudo(k, profileMap, user.id));
 
       // Fetch user stats
       const { data: profileData } = await supabase
@@ -162,6 +121,7 @@ export default async function SunKudosPage() {
       <main className="flex-1 flex flex-col">
         <KudosPageClient
           initialKudos={kudos}
+          initialHighlightKudos={highlightKudos}
           stats={stats}
           gifts={gifts}
           specialDay={specialDay}
