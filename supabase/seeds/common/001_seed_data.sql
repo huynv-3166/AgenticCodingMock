@@ -58,7 +58,7 @@ BEGIN
       raw_app_meta_data, raw_user_meta_data, is_sso_user
     ) VALUES (
       _uid, '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated',
-      _user->>'email', crypt(_user->>'password', gen_salt('bf')),
+      _user->>'email', extensions.crypt(_user->>'password', extensions.gen_salt('bf')),
       now(), now(), now(), now(),
       '', '', '', '', '', 0, NULL, '', '', '',
       jsonb_build_object('provider', 'email', 'providers', array['email']),
