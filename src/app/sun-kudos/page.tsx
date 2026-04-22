@@ -9,7 +9,7 @@ import { fetchProfileMapForKudos, formatKudo } from "@/libs/kudos/queries";
 import type { Language, Kudo, UserStats, GiftRecipient, SpecialDayInfo } from "@/types";
 
 const HIGHLIGHT_SELECT = `
-  id, sender_id, receiver_id, message, category, is_anonymous, heart_count, created_at,
+  id, sender_id, receiver_id, message, category, is_anonymous, anonymous_name, heart_count, created_at,
   hashtags:kudo_hashtags(hashtag:hashtags(name)),
   images:kudo_images(image_url, display_order),
   hearts!left(user_id)

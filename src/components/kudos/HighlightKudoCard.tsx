@@ -27,7 +27,14 @@ export function HighlightKudoCard({
   labels,
 }: HighlightKudoCardProps) {
   const senderDisplay = kudo.is_anonymous
-    ? { user_id: "", name: labels.anonymous, avatar_url: null, department: "", department_code: "", star_level: 0 }
+    ? {
+        user_id: "",
+        name: kudo.anonymous_name?.trim() || labels.anonymous,
+        avatar_url: null,
+        department: "",
+        department_code: "",
+        star_level: 0,
+      }
     : kudo.sender;
 
   return (

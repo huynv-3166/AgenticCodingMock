@@ -21,6 +21,7 @@ export type Kudo = {
   heart_count: number;
   is_hearted_by_me: boolean;
   is_anonymous: boolean;
+  anonymous_name?: string | null;
   created_at: string; // ISO 8601
 };
 

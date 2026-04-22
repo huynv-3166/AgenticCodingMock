@@ -20,7 +20,7 @@ export async function GET(
     .from("kudos")
     .select(
       `
-      id, message, category, is_anonymous, heart_count, created_at,
+      id, message, category, is_anonymous, anonymous_name, heart_count, created_at,
       sender:user_profiles!kudos_sender_id_fkey(user_id, star_level, department:departments(name, code)),
       receiver:user_profiles!kudos_receiver_id_fkey(user_id, star_level, department:departments(name, code)),
       hashtags:kudo_hashtags(hashtag:hashtags(name)),
@@ -72,6 +72,7 @@ export async function GET(
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       is_hearted_by_me: (kudo.hearts ?? []).some((h: any) => h.user_id === user.id),
       is_anonymous: kudo.is_anonymous,
+      anonymous_name: kudo.anonymous_name ?? null,
       created_at: kudo.created_at,
     },
   });

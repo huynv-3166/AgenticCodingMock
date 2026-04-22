@@ -29,7 +29,14 @@ export function KudoCard({
   onFilterByHashtag,
 }: KudoCardProps) {
   const senderDisplay = kudo.is_anonymous
-    ? { user_id: "", name: anonymousLabel, avatar_url: null, department: "", department_code: "", star_level: 0 }
+    ? {
+        user_id: "",
+        name: kudo.anonymous_name?.trim() || anonymousLabel,
+        avatar_url: null,
+        department: "",
+        department_code: "",
+        star_level: 0,
+      }
     : kudo.sender;
 
   return (

@@ -46,7 +46,7 @@ export async function GET(request: Request) {
     .from("kudos")
     .select(
       `
-      id, sender_id, receiver_id, message, category, is_anonymous, heart_count, created_at,
+      id, sender_id, receiver_id, message, category, is_anonymous, anonymous_name, heart_count, created_at,
       hashtags:kudo_hashtags(hashtag:hashtags(name)),
       images:kudo_images(image_url, display_order),
       hearts!left(user_id)

@@ -51,7 +51,7 @@ export async function GET(request: Request) {
     .from("kudos")
     .select(
       `
-      id, sender_id, receiver_id, message, category, is_anonymous, heart_count, created_at,
+      id, sender_id, receiver_id, message, category, is_anonymous, anonymous_name, heart_count, created_at,
       hashtags:kudo_hashtags(hashtag:hashtags(name)),
       images:kudo_images(image_url, display_order),
       hearts!left(user_id)
@@ -122,6 +122,12 @@ export async function POST(request: Request) {
   // Sanitize HTML message
   const sanitizedMessage = sanitizeKudoHtml(input.message);
 
+  // Only persist a custom anonymous name when anonymous mode is on and a name was provided.
+  const anonymousName =
+    input.is_anonymous && input.anonymous_name?.trim()
+      ? input.anonymous_name.trim()
+      : null;
+
   try {
     // Step 1: Insert kudo
     const { data: kudo, error: kudoError } = await supabase
@@ -132,6 +138,7 @@ export async function POST(request: Request) {
         message: sanitizedMessage,
         category: input.badge_title,
         is_anonymous: input.is_anonymous,
+        anonymous_name: anonymousName,
         heart_count: 0,
       })
       .select("id, created_at")

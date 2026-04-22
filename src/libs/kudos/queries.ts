@@ -136,6 +136,7 @@ export function formatKudo(
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     is_hearted_by_me: (kudo.hearts ?? []).some((h: any) => h.user_id === currentUserId),
     is_anonymous: kudo.is_anonymous,
+    anonymous_name: kudo.anonymous_name ?? null,
     created_at: kudo.created_at,
   };
 }

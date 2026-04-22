@@ -1,7 +1,10 @@
 import { z } from "zod";
 
 export const kudoFeedParamsSchema = z.object({
-  cursor: z.string().datetime().optional(),
+  // Cursor is a Postgres TIMESTAMPTZ echoed back from the previous page's last row,
+  // which serializes as `YYYY-MM-DDTHH:MM:SS.ffffff+00:00`. Zod's default datetime
+  // validator only accepts the `Z` suffix, so explicitly allow numeric offsets.
+  cursor: z.string().datetime({ offset: true }).optional(),
   limit: z.coerce.number().int().min(1).max(50).default(10),
   hashtag: z.string().max(100).optional(),
   department: z.string().max(20).optional(),
