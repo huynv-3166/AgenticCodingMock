@@ -130,23 +130,24 @@ export default async function SunKudosPage() {
         };
       }
 
-      // Fetch spotlight data: receiver names + kudo counts
+      // Fetch spotlight data from `spotlight_receiver_counts` view so the
+      // total and per-user counts both derive from the `kudos` table and
+      // cannot drift from reality.
       const { count: totalKudosCount } = await supabase
         .from("kudos")
         .select("*", { count: "exact", head: true });
 
       const { data: receiverCounts } = await supabase
-        .from("user_profiles")
-        .select("display_name, kudo_received_count")
-        .gt("kudo_received_count", 0)
-        .order("kudo_received_count", { ascending: false })
+        .from("spotlight_receiver_counts")
+        .select("display_name, kudo_count")
+        .order("kudo_count", { ascending: false })
         .limit(30);
 
       spotlightData = {
         totalKudos: totalKudosCount ?? 0,
         names: (receiverCounts ?? []).map((r) => ({
-          name: (r as { display_name: string; kudo_received_count: number }).display_name ?? "",
-          kudoCount: (r as { display_name: string; kudo_received_count: number }).kudo_received_count ?? 0,
+          name: (r as { display_name: string; kudo_count: number }).display_name ?? "",
+          kudoCount: (r as { display_name: string; kudo_count: number }).kudo_count ?? 0,
         })),
       };
     }
